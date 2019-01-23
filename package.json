@@ -1,0 +1,43 @@
+{
+  "name": "App",
+  "main": "node_modules/expo/AppEntry.js",
+  "version": "0.0.1",
+  "description": "App",
+  "author": null,
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "babel-preset-expo": "^5.0.0",
+    "expo": "^32.0.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-navigation": "2",
+    "react-redux": "^6.0.0",
+    "recompose": "^0.30.0",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.4",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "eslint": "^4.2.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-formatter-pretty": "^1.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-react-native": "^3.1.0",
+    "remote-redux-devtools": "^0.5.13",
+    "remotedev-server": "^0.3.1"
+  }
+}
