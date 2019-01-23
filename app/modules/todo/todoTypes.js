@@ -1,0 +1,5 @@
+export default {
+  ADD_TODO_START: 'ADD_TODO_START',
+  ADD_TODO_OK: 'ADD_TODO_OK',
+  ADD_TODO_ERROR: 'ADD_TODO_ERROR',
+};
