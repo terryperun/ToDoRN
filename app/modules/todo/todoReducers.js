@@ -1,3 +1,4 @@
+import { handleActions } from 'redux-actions';
 import types from './todoTypes';
 
 const initialState = {
@@ -12,30 +13,25 @@ const initialState = {
   error: null,
 };
 
-function reducer(state = initialState, action) {
-  switch (action.type) {
-    case types.ADD_TODO_START: {
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      };
-    }
-    case types.ADD_TODO_OK: {
-      return {
-        ...state,
-        isLoading: false,
-        items: [...state.items, action.payload],
-      };
-    }
-    case types.ADD_TODO_ERROR: {
-      return {
-        ...state,
-        error: action.payload,
-      };
-    }
-    default:
-      return state;
-  }
-}
-export default reducer;
+const todoReducer = handleActions(
+  {
+    [types.ADD_TODO_START]: (state, action) => ({
+      ...state,
+      isLoading: true,
+      error: null,
+    }),
+    [types.ADD_TODO_OK]: (state, action) => ({
+      ...state,
+      isLoading: false,
+      items: [...state.items, action.payload],
+    }),
+
+    [types.ADD_TODO_ERROR]: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
+  },
+  initialState,
+);
+
+export default todoReducer;

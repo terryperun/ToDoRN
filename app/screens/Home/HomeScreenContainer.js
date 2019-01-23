@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { compose, withHandlers, withState } from 'recompose';
 import HomeScreenView from './HomeScreenView';
-import { todoOperation } from '../../modules/todo/todoOperations';
+import { todoOperation } from '../../modules/todo';
 
 const mapStateToProps = (state) => ({
   items: state.todo.items,
