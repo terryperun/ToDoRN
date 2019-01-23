@@ -5,10 +5,12 @@ import s from './styles';
 const ItemList = ({ task, completed }) => (
   <View style={s.container}>
     <View style={s.checkBox}>
-      <CheckBox value={completed} />
+      <CheckBox value={completed} disabled={completed} />
     </View>
     <View style={s.task}>
-      <Text style={completed ? s.completedTask : null}>{task}</Text>
+      <Text style={completed ? s.completedTask : s.textTask}>
+        {task}
+      </Text>
     </View>
   </View>
 );

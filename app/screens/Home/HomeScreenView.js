@@ -15,6 +15,7 @@ import { data } from '../../mocks/items';
 const HomeScreenView = () => {
   const array = data.map((item) => (
     <ItemList
+      key={item.id}
       task={item.task}
       completed={item.completed}
       style={s.task}
@@ -39,14 +40,22 @@ const HomeScreenView = () => {
 };
 
 HomeScreenView.navigationOptions = {
-  title: 'My shopping lists',
+  title: 'My shopping list',
   headerRight: (
     <ActivityIndicator
       size={30}
-      color="#924E46"
+      color="#B71C1C"
       style={s.activityIndicator}
     />
   ),
+  headerTitleStyle: {
+    elevation: 6,
+  },
+  headerStyle: {
+    elevation: 0,
+    borderBottomWidth: 1.5,
+    borderColor: '#d6d7da',
+  },
 };
 
 export default HomeScreenView;

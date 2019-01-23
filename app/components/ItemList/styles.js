@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderBottomWidth: 1.5,
     borderBottomColor: '#d6d7da',
+    backgroundColor: 'white',
   },
   checkBox: {
     justifyContent: 'center',
@@ -15,8 +16,12 @@ const styles = StyleSheet.create({
   task: {
     justifyContent: 'center',
   },
+  textTask: {
+    color: '#212121',
+  },
   completedTask: {
     textDecorationLine: 'line-through',
+    color: '#9E9E9E',
   },
 });
 

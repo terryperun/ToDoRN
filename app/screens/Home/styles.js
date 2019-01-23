@@ -1,24 +1,22 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: 'red',
-    // flex: 1,
-  },
+  container: {},
   containerInput: {
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1.5,
     borderColor: '#d6d7da',
+    backgroundColor: 'white',
   },
   textInput: {
     height: 60,
-    paddingLeft: 15,
     flex: 1,
   },
   icon: {
     paddingLeft: 10,
     paddingRight: 10,
+    color: '#757575',
   },
   task: {},
   activityIndicator: {
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
     borderColor: '#d6d7da',
   },
   touchableBtnText: {
-    color: '#7595C9',
+    color: '#5699FF',
   },
 });
 export default styles;
