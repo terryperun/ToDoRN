@@ -12,6 +12,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^9.0.0",
     "babel-preset-expo": "^5.0.0",
     "expo": "^32.0.0",
     "react": "16.5.0",
