@@ -9,10 +9,11 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
+import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import ItemList from '../../components/ItemList/ItemList';
 import { data } from '../../mocks/items';
 
-const HomeScreenView = () => {
+const HomeScreenView = ({ setInputTask, inputTask, addTodo }) => {
   const array = data.map((item) => (
     <ItemList
       key={item.id}
@@ -29,11 +30,18 @@ const HomeScreenView = () => {
           size={30}
           style={s.icon}
         />
-        <TextInput placeholder="Add item" style={s.textInput} />
+        <TextInput
+          placeholder="Add item"
+          style={s.textInput}
+          onChangeText={setInputTask}
+          value={inputTask}
+        />
       </View>
       {array}
       <TouchableOpacity style={s.touchableBtn}>
-        <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
+        <Text style={s.touchableBtnText} onPress={addTodo}>
+          HIDE CHECKED-OFF ITEMS
+        </Text>
       </TouchableOpacity>
     </View>
   );

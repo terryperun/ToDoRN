@@ -1,7 +1,24 @@
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, withHandlers, withState } from 'recompose';
 import HomeScreenView from './HomeScreenView';
+import { todoOperation } from '../../modules/todo/todoOperations';
 
-const enhance = compose(connect());
+const mapStateToProps = (state) => ({
+  items: state.todo.items,
+});
+
+const enhance = compose(
+  connect(
+    mapStateToProps,
+    // { addTodo: todoOperation.addTodo },
+  ),
+  withState('inputTask', 'setInputTask', ''),
+  withHandlers({
+    addTodo: (props) => () => {
+      // props.addTodoInList(props.inputTask);
+      console.log('PROPS------------', props);
+    },
+  }),
+);
 
 export default enhance(HomeScreenView);
