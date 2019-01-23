@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   containerInput: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: '#d6d7da',
     backgroundColor: 'white',
   },
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 60,
-    borderBottomWidth: 1.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: '#d6d7da',
   },
   touchableBtnText: {

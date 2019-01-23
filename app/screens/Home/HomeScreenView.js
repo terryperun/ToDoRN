@@ -5,6 +5,7 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -53,7 +54,7 @@ HomeScreenView.navigationOptions = {
   },
   headerStyle: {
     elevation: 0,
-    borderBottomWidth: 1.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: '#d6d7da',
   },
 };

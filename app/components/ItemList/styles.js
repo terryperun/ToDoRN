@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 60,
-    borderBottomWidth: 1.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#d6d7da',
     backgroundColor: 'white',
   },
