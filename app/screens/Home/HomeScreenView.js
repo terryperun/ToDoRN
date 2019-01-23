@@ -17,7 +17,7 @@ const HomeScreenView = () => {
   const array = data.map((item) => (
     <ItemList
       key={item.id}
-      task={item.task}
+      textTask={item.textTask}
       completed={item.completed}
       style={s.task}
     />

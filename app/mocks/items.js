@@ -1,12 +1,12 @@
 export const data = [
   {
     id: 1,
-    task: 'buy milk',
+    textTask: 'buy milk',
     completed: false,
   },
   {
     id: 2,
-    task: 'buy eggs',
+    textTask: 'buy eggs',
     completed: true,
   },
 ];
