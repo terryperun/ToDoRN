@@ -5,8 +5,18 @@ const initialState = {
   items: [
     {
       id: 1,
-      task: 'buy milk',
+      text: 'buy tost',
       completed: false,
+    },
+    {
+      id: 2,
+      text: 'buy milk',
+      completed: false,
+    },
+    {
+      id: 3,
+      text: 'buy eggs',
+      completed: true,
     },
   ],
   isLoading: false,

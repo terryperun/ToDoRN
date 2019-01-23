@@ -12,9 +12,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import ItemList from '../../components/ItemList/ItemList';
-import { data } from '../../mocks/items';
+// import { data } from '../../mocks/items';
 
-const HomeScreenView = ({ setInputTask, inputTask, addTodo }) => {
+const HomeScreenView = ({
+  setInputTask,
+  inputTask,
+  addTodo,
+  data,
+}) => {
   const array = data.map((item) => (
     <ItemList
       key={item.id}
