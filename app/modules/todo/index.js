@@ -5,4 +5,4 @@ export todoTypes from './todoTypes';
 export todoActions from './todoActions';
 // export * as actions from './actions';
 
-export default reducer;
+export default todoReducers;

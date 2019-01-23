@@ -1,7 +1,13 @@
 import types from './todoTypes';
 
 const initialState = {
-  items: [{ task: 'buy milk', status: false }],
+  items: [
+    {
+      id: 1,
+      task: 'buy milk',
+      completed: false,
+    },
+  ],
   isLoading: false,
   error: null,
 };

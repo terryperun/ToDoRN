@@ -1,14 +1,14 @@
 import * as actions from './todoActions';
 import Api from '../../api/Api';
 
-export const addTodo = (item) => async (dispatch) => {
+export const addTodo = (textTask) => async (dispatch) => {
   dispatch(actions.addTodoStart());
 
   const createTask = (item) => ({
     task: item.task || '',
     completed: false,
   });
-  const task = createTask(item);
+  const task = createTask(textTask);
 
   try {
     const newTask = await Api.add(task);
