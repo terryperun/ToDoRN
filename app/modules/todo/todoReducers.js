@@ -58,7 +58,7 @@ const todoReducer = handleActions(
     [types.GET_ALL_TODO_OK]: (state, action) => ({
       ...state,
       isLoading: false,
-      items: [action.payload],
+      items: [...action.payload],
     }),
 
     [types.GET_ALL_TODO_ERROR]: (state, action) => ({

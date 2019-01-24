@@ -6,21 +6,23 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
 // import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import ItemList from '../../components/ItemList/ItemList';
-// import { data } from '../../mocks/items';
+import { data } from '../../mocks/items';
 
 const HomeScreenView = ({
   setInputTask,
   inputTask,
   addTodo,
-  data,
+  itemsTodo,
+  // data,
 }) => {
-  const array = data.map((item) => (
+  const array = itemsTodo.map((item) => (
     <ItemList
       key={item.id}
       text={item.text}
@@ -29,7 +31,7 @@ const HomeScreenView = ({
     />
   ));
   return (
-    <View style={s.container}>
+    <ScrollView style={s.container}>
       <View style={s.containerInput}>
         <MaterialCommunityIcons
           name="plus"
@@ -49,7 +51,7 @@ const HomeScreenView = ({
           HIDE CHECKED-OFF ITEMS
         </Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 

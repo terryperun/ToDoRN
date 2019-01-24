@@ -12,6 +12,7 @@ import { todoOperations } from '../../modules/todo';
 const mapStateToProps = (state) => ({
   itemsTodo: state.todo.items,
   stateItems: state,
+  isLoading: state.todo.isLoading,
 });
 
 const enhance = compose(
@@ -28,16 +29,11 @@ const enhance = compose(
       this.props.allTodo();
     },
   }),
-  // withState('data', 'setData', (props) => props.allTodo()),
-  withState('data', 'setData', (props) => props.itemsTodo),
   withHandlers({
     addTodo: (props) => () => {
-      // props.addTodo(props.inputTask);
-      console.log(
-        'PROPS-----------------------------------------------',
-        props.stateItems,
-        props,
-      );
+      props.addTodo(props.inputTask);
+      // console.log('PROPS--STATE', props.stateItems);
+      // console.log('PROPS-----DATA', props);
     },
   }),
 );
