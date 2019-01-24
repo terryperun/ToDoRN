@@ -1,4 +1,4 @@
-import { AsyncStore } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import uuid from 'uuid/v4';
 
 const methods = {
@@ -6,6 +6,18 @@ const methods = {
   get: 'get',
   patch: 'patch',
   delete: 'delete',
+};
+
+const saveCache = (cache) =>
+  AsyncStorage.setItem('cache', JSON.stringify(cache));
+const getCache = async () => {
+  const cache = await AsyncStorage.getItem('cache');
+
+  if (!cache) {
+    return [];
+  }
+
+  return JSON.parse(cache);
 };
 
 function getRandomArbitrary(min, max) {
@@ -33,7 +45,7 @@ const handleRequest = async (endpoint, options, cache) => {
           (todo) => !options.body.includes(todo.id),
         );
 
-        await AsyncStore.setItem('cache', newCache);
+        await saveCache(newCache);
 
         return { success: true };
       }
@@ -47,7 +59,7 @@ const handleRequest = async (endpoint, options, cache) => {
       };
       const newCache = cache.concat(newTodo);
 
-      await AsyncStore.setItem('cache', newCache);
+      await saveCache(newCache);
 
       return newTodo;
     }
@@ -71,7 +83,7 @@ const handleRequest = async (endpoint, options, cache) => {
         return newTodo;
       });
 
-      await AsyncStore.setItem('cache', newCache);
+      await saveCache(newCache);
 
       return newTodo;
     }
@@ -81,7 +93,7 @@ const handleRequest = async (endpoint, options, cache) => {
 
       const newCache = cache.filter((todo) => todo.id !== id);
 
-      await AsyncStore.setItem('cache', newCache);
+      await saveCache(newCache);
 
       return { success: true };
     }
@@ -97,11 +109,7 @@ const fetchData = async (endpoint, options = {}) => {
   }
 
   // getting cached data from store
-  let cache = AsyncStore.getItem('cache');
-
-  if (!cache) {
-    cache = [];
-  }
+  const cache = await getCache();
 
   const res = await handleRequest(endpoint, options, cache);
 
