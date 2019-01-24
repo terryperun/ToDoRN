@@ -29,7 +29,7 @@ export const getAll = () => async (dispatch) => {
   try {
     const allTodo = await Api.getAll();
     console.log('in Operation ok ALL--', allTodo);
-    dispatch(actions.getAllTodoOk({ allTodo }));
+    dispatch(actions.getAllTodoOk(allTodo));
   } catch (error) {
     dispatch(actions.getAllTodoError({ message: error.message }));
   }
