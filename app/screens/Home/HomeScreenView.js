@@ -21,7 +21,6 @@ const HomeScreenView = ({
   addTodo,
   itemsTodo,
   isLoading,
-  // data,
   showBtnDone,
   hideBtnDone,
   ref,
@@ -67,9 +66,7 @@ const HomeScreenView = ({
 HomeScreenView.navigationOptions = ({ navigation }) => ({
   title: 'My shopping list',
   headerRight: navigation.getParam('showDone') ? (
-    <DoneBtn
-      onPress={() => navigation.setParams({ sendDone: true })}
-    />
+    <DoneBtn onPress={navigation.getParam('onDonePress')} />
   ) : navigation.getParam('isLoading') ? (
     <ActivityIndicator
       size={30}

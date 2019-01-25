@@ -40,17 +40,24 @@ const enhance = compose(
       props.addTodo(props.inputTask);
       // props.ref.blur();
     },
+
+    onDonePress: (props) => () => {
+      console.log('PRESS onDonePress');
+      props.addTodo(props.inputTask);
+    },
+
     showBtnDone: (props) => () => {
       props.navigation.setParams({
         showDone: true,
-        onDonePress: props.addTodo,
+        onDonePress: props.onDonePress,
       });
+      console.log('PRESS2', props);
     },
+
     hideBtnDone: (props) => () => {
       props.navigation.setParams({ showDone: false });
     },
   }),
-  // setParamsOnChange(isLoadding, props)
   withPropsOnChange(['isLoading'], (props) => {
     props.navigation.setParams({ isLoading: props.isLoading });
   }),
