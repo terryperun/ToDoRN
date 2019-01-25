@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   compose,
@@ -5,6 +6,8 @@ import {
   withState,
   hoistStatics,
   lifecycle,
+  withProps,
+  withPropsOnChange,
 } from 'recompose';
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
@@ -24,6 +27,9 @@ const enhance = compose(
     },
   ),
   withState('inputTask', 'setInputTask', ''),
+  withProps(() => ({
+    ref: React.createRef(),
+  })),
   lifecycle({
     componentDidMount() {
       this.props.allTodo();
@@ -32,9 +38,21 @@ const enhance = compose(
   withHandlers({
     addTodo: (props) => () => {
       props.addTodo(props.inputTask);
-      // console.log('PROPS--STATE', props.stateItems);
-      // console.log('PROPS-----DATA', props);
+      // props.ref.blur();
     },
+    showBtnDone: (props) => () => {
+      props.navigation.setParams({
+        showDone: true,
+        onDonePress: props.addTodo,
+      });
+    },
+    hideBtnDone: (props) => () => {
+      props.navigation.setParams({ showDone: false });
+    },
+  }),
+  // setParamsOnChange(isLoadding, props)
+  withPropsOnChange(['isLoading'], (props) => {
+    props.navigation.setParams({ isLoading: props.isLoading });
   }),
 );
 

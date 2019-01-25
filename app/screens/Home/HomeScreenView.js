@@ -11,7 +11,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
-// import DoneBtn from '../../components/DoneBtn/DoneBtn';
+import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import ItemList from '../../components/ItemList/ItemList';
 import { data } from '../../mocks/items';
 
@@ -20,7 +20,11 @@ const HomeScreenView = ({
   inputTask,
   addTodo,
   itemsTodo,
+  isLoading,
   // data,
+  showBtnDone,
+  hideBtnDone,
+  ref,
 }) => {
   const array = itemsTodo.map((item) => (
     <ItemList
@@ -43,8 +47,13 @@ const HomeScreenView = ({
           style={s.textInput}
           onChangeText={setInputTask}
           value={inputTask}
+          onFocus={showBtnDone}
+          onBlur={hideBtnDone}
+          onSubmitEditing={addTodo}
+          ref={ref}
         />
       </View>
+      {/* {isLoading ? 'Yep</Text> : <Text>Nope</Text>} */}
       {array}
       <TouchableOpacity style={s.touchableBtn}>
         <Text style={s.touchableBtnText} onPress={addTodo}>
@@ -55,15 +64,19 @@ const HomeScreenView = ({
   );
 };
 
-HomeScreenView.navigationOptions = {
+HomeScreenView.navigationOptions = ({ navigation }) => ({
   title: 'My shopping list',
-  headerRight: (
+  headerRight: navigation.getParam('showDone') ? (
+    <DoneBtn
+      onPress={() => navigation.setParams({ sendDone: true })}
+    />
+  ) : navigation.getParam('isLoading') ? (
     <ActivityIndicator
       size={30}
       color="#B71C1C"
       style={s.activityIndicator}
     />
-  ),
+  ) : null,
   headerTitleStyle: {
     elevation: 6,
   },
@@ -72,6 +85,6 @@ HomeScreenView.navigationOptions = {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: '#d6d7da',
   },
-};
+});
 
 export default HomeScreenView;
