@@ -37,7 +37,6 @@ const enhance = compose(
   }),
   withHandlers({
     onDonePress: (props) => () => {
-      console.log('PRESS onDonePress');
       props.addTodo(props.inputTask);
     },
   }),
@@ -52,7 +51,10 @@ const enhance = compose(
         showDone: true,
         onDonePress: props.onDonePress,
       });
-      console.log('PRESS222222222222222', props.onDonePress);
+      console.log(
+        '0000000000000000000000000000000000000000000',
+        props,
+      );
     },
 
     hideBtnDone: (props) => () => {

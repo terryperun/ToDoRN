@@ -36,11 +36,11 @@ const todoReducer = handleActions(
       isLoading: false,
       items: [
         ...state.items.map((todo) => {
-          if (todo.id !== action.id) {
+          if (todo.id !== action.payload.id) {
             return todo;
           }
+          return action.payload;
         }),
-        action.payload.newTask,
       ],
     }),
 

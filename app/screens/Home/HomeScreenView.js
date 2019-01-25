@@ -13,7 +13,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import ItemList from '../../components/ItemList/ItemList';
-import { data } from '../../mocks/items';
 
 const HomeScreenView = ({
   setInputTask,

@@ -13,7 +13,9 @@ export const addTodo = (textTask) => async (dispatch) => {
 
   try {
     const newTask = await Api.add(task);
-    dispatch(actions.addTodoOk(newTask, task.id));
+    const { id } = task;
+    
+    dispatch(actions.addTodoOk(newTask, id));
   } catch (error) {
     dispatch(actions.addTodoError({ message: error.message }));
   }
