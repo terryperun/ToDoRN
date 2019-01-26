@@ -39,7 +39,7 @@ const todoReducer = handleActions(
           if (todo.id !== action.payload.id) {
             return todo;
           }
-          return action.payload;
+          return action.payload.newTask;
         }),
       ],
     }),
@@ -49,19 +49,19 @@ const todoReducer = handleActions(
       error: action.payload,
     }),
 
-    [types.GET_ALL_TODO_START]: (state, action) => ({
+    [types.GET_ALL_TODOS_START]: (state, action) => ({
       ...state,
       isLoading: true,
       error: null,
     }),
 
-    [types.GET_ALL_TODO_OK]: (state, action) => ({
+    [types.GET_ALL_TODOS_OK]: (state, action) => ({
       ...state,
       isLoading: false,
       items: [...action.payload],
     }),
 
-    [types.GET_ALL_TODO_ERROR]: (state, action) => ({
+    [types.GET_ALL_TODOS_ERROR]: (state, action) => ({
       ...state,
       error: action.payload,
     }),

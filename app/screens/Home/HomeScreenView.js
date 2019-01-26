@@ -12,20 +12,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
-import ItemList from '../../components/ItemList/ItemList';
+import Item from '../../components/Item/Item';
+import Input from '../../components/Input/Input';
 
 const HomeScreenView = ({
-  setInputTask,
-  inputTask,
+  setNewTaskInputText,
+  newTaskInputText,
   addTodo,
   itemsTodo,
-  isLoading,
   showBtnDone,
   hideBtnDone,
   ref,
 }) => {
-  const array = itemsTodo.map((item) => (
-    <ItemList
+  const elementsArray = itemsTodo.map((item) => (
+    <Item
       key={item.id}
       text={item.text}
       completed={item.completed}
@@ -43,16 +43,15 @@ const HomeScreenView = ({
         <TextInput
           placeholder="Add item"
           style={s.textInput}
-          onChangeText={setInputTask}
-          value={inputTask}
+          onChangeText={setNewTaskInputText}
+          value={newTaskInputText}
           onFocus={showBtnDone}
           onBlur={hideBtnDone}
           onSubmitEditing={addTodo}
           ref={ref}
         />
       </View>
-      {/* {isLoading ? 'Yep</Text> : <Text>Nope</Text>} */}
-      {array}
+      {elementsArray}
       <TouchableOpacity style={s.touchableBtn}>
         <Text style={s.touchableBtnText} onPress={addTodo}>
           HIDE CHECKED-OFF ITEMS
@@ -62,25 +61,61 @@ const HomeScreenView = ({
   );
 };
 
-HomeScreenView.navigationOptions = ({ navigation }) => ({
-  title: 'My shopping list',
-  headerRight: navigation.getParam('showDone') ? (
-    <DoneBtn onPress={navigation.getParam('onDonePress')} />
-  ) : navigation.getParam('isLoading') ? (
+HomeScreenView.navigationOptions = ({ navigation }) => {
+  if (navigation.getParam('showDone')) {
+    <DoneBtn
+      onPress={navigation.getParam('onDonePress')}
+      style={s.doneBtn}
+    />;
+  } else if (navigation.getParam('isLoading')) {
     <ActivityIndicator
       size={30}
       color="#B71C1C"
       style={s.activityIndicator}
-    />
-  ) : null,
-  headerTitleStyle: {
-    elevation: 6,
-  },
-  headerStyle: {
-    elevation: 0,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#d6d7da',
-  },
-});
+    />;
+  } else {
+    null;
+  }
+  return {
+    title: 'My shopping list',
+    // headerRight: () => {
+    //   if (navigation.getParam('showDone')) {
+    //     <DoneBtn
+    //       onPress={navigation.getParam('onDonePress')}
+    //       style={s.doneBtn}
+    //     />;
+    //   } else if (navigation.getParam('isLoading')) {
+    //     <ActivityIndicator
+    //       size={30}
+    //       color="#B71C1C"
+    //       style={s.activityIndicator}
+    //     />;
+    //   } else {
+    //     null;
+    //   }
+    // },
+
+    headerRight: navigation.getParam('showDone') ? (
+      <DoneBtn
+        onPress={navigation.getParam('onDonePress')}
+        style={s.doneBtn}
+      />
+    ) : navigation.getParam('isLoading') ? (
+      <ActivityIndicator
+        size={30}
+        color="#B71C1C"
+        style={s.activityIndicator}
+      />
+    ) : null,
+    headerTitleStyle: {
+      elevation: 6,
+    },
+    headerStyle: {
+      elevation: 0,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderColor: '#d6d7da',
+    },
+  };
+};
 
 export default HomeScreenView;

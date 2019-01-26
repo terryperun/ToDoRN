@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, CheckBox } from 'react-native';
 import s from './styles';
 
-const ItemList = ({ text, completed }) => (
+const Item = ({ text, completed }) => (
   <View style={s.container}>
     <View style={s.checkBox}>
       <CheckBox value={completed} disabled={completed} />
@@ -15,4 +15,4 @@ const ItemList = ({ text, completed }) => (
   </View>
 );
 
-export default ItemList;
+export default Item;

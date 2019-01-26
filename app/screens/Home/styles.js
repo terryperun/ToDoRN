@@ -32,5 +32,9 @@ const styles = StyleSheet.create({
   touchableBtnText: {
     color: '#5699FF',
   },
+
+  doneBtn: {
+    marginRight: 15,
+  },
 });
 export default styles;

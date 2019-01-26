@@ -1,33 +1,28 @@
-import uuid from 'uuid/v4';
 import * as actions from './todoActions';
 import Api from '../../api/Api';
+import createTask from '../../utils/creators';
 
 export const addTodo = (textTask) => async (dispatch) => {
-  const createTask = (text) => ({
-    id: uuid(),
-    text: text || '',
-    completed: false,
-  });
   const task = createTask(textTask);
   dispatch(actions.addTodoStart(task));
 
   try {
     const newTask = await Api.add(task);
     const { id } = task;
-    
-    dispatch(actions.addTodoOk(newTask, id));
+
+    dispatch(actions.addTodoOk({ newTask, id }));
   } catch (error) {
     dispatch(actions.addTodoError({ message: error.message }));
   }
 };
 
 export const getAll = () => async (dispatch) => {
-  dispatch(actions.getAllTodoStart());
+  dispatch(actions.getAllTodosStart());
 
   try {
-    const allTodo = await Api.getAll();
-    dispatch(actions.getAllTodoOk(allTodo));
+    const allTodos = await Api.getAll();
+    dispatch(actions.getAllTodosOk(allTodos));
   } catch (error) {
-    dispatch(actions.getAllTodoError({ message: error.message }));
+    dispatch(actions.getAllTodosError({ message: error.message }));
   }
 };

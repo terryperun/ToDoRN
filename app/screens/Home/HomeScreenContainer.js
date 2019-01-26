@@ -23,38 +23,30 @@ const enhance = compose(
     mapStateToProps,
     {
       addTodo: todoOperations.addTodo,
-      allTodo: todoOperations.getAll,
+      getAll: todoOperations.getAll,
     },
   ),
-  withState('inputTask', 'setInputTask', ''),
+  withState('newTaskInputText', 'setNewTaskInputText', ''),
   withProps(() => ({
-    ref: React.createRef(),
+    inputRef: React.createRef(),
   })),
   lifecycle({
     componentDidMount() {
-      this.props.allTodo();
-    },
-  }),
-  withHandlers({
-    onDonePress: (props) => () => {
-      props.addTodo(props.inputTask);
+      this.props.getAll();
     },
   }),
   withHandlers({
     addTodo: (props) => () => {
-      props.addTodo(props.inputTask);
-      // props.ref.blur();
+      props.addTodo(props.newTaskInputText);
+      // props.inputRef.blur();
     },
-
+  }),
+  withHandlers({
     showBtnDone: (props) => () => {
       props.navigation.setParams({
         showDone: true,
-        onDonePress: props.onDonePress,
+        onDonePress: props.addTodo,
       });
-      console.log(
-        '0000000000000000000000000000000000000000000',
-        props,
-      );
     },
 
     hideBtnDone: (props) => () => {
