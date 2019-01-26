@@ -12,3 +12,7 @@ export const getAllTodosOk = createAction(types.GET_ALL_TODOS_OK);
 export const getAllTodosError = createAction(
   types.GET_ALL_TODOS_ERROR,
 );
+
+export const removeTodoStart = createAction(types.REMOVE_TODO_START);
+export const removeTodoOk = createAction(types.REMOVE_TODO_OK);
+export const removeTodoError = createAction(types.REMOVE_TODO_ERROR);

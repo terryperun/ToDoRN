@@ -1,6 +1,6 @@
 import * as actions from './todoActions';
 import Api from '../../api/Api';
-import createTask from '../../utils/creators';
+import { createTask } from '../../utils/creators';
 
 export const addTodo = (textTask) => async (dispatch) => {
   const task = createTask(textTask);
@@ -24,5 +24,15 @@ export const getAll = () => async (dispatch) => {
     dispatch(actions.getAllTodosOk(allTodos));
   } catch (error) {
     dispatch(actions.getAllTodosError({ message: error.message }));
+  }
+};
+
+export const removeTodo = (id) => async (dispatch) => {
+  dispatch(actions.removeTodoStart());
+  try {
+    await Api.remove(id);
+    dispatch(actions.removeTodoOk({ id }));
+  } catch (error) {
+    dispatch(actions.removeTodoError({ message: error.message }));
   }
 };

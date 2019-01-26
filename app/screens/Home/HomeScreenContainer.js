@@ -8,9 +8,15 @@ import {
   lifecycle,
   withProps,
   withPropsOnChange,
+  Alert,
 } from 'recompose';
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
+import setParamOnChange from '../../utils/enhancers/setParamOnChange';
+
+// import AlertDelete from './component/AlertDelete/AlertDelete';
+
+import AlertService from '../../servisces/AlertService';
 
 const mapStateToProps = (state) => ({
   itemsTodo: state.todo.items,
@@ -24,6 +30,7 @@ const enhance = compose(
     {
       addTodo: todoOperations.addTodo,
       getAll: todoOperations.getAll,
+      removeTodo: todoOperations.removeTodo,
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
@@ -38,10 +45,14 @@ const enhance = compose(
   withHandlers({
     addTodo: (props) => () => {
       props.addTodo(props.newTaskInputText);
-      // props.inputRef.blur();
+      props.inputRef.current.blur();
+      props.setNewTaskInputText('');
     },
   }),
   withHandlers({
+    removeTodo: (props) => (id) => {
+      AlertService.deleteAlert(() => props.removeTodo(id));
+    },
     showBtnDone: (props) => () => {
       props.navigation.setParams({
         showDone: true,
@@ -53,9 +64,7 @@ const enhance = compose(
       props.navigation.setParams({ showDone: false });
     },
   }),
-  withPropsOnChange(['isLoading'], (props) => {
-    props.navigation.setParams({ isLoading: props.isLoading });
-  }),
+  setParamOnChange('isLoading'),
 );
 
 export default hoistStatics(enhance)(HomeScreenView);

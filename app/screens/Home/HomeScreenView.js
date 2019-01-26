@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import Item from '../../components/Item/Item';
+import Input from '../../components/Input/Input';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -21,7 +22,8 @@ const HomeScreenView = ({
   itemsTodo,
   showBtnDone,
   hideBtnDone,
-  ref,
+  inputRef,
+  removeTodo,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
     <Item
@@ -29,6 +31,7 @@ const HomeScreenView = ({
       text={item.text}
       completed={item.completed}
       style={s.task}
+      onLongPress={() => removeTodo(item.id)}
     />
   ));
   return (
@@ -47,14 +50,12 @@ const HomeScreenView = ({
           onFocus={showBtnDone}
           onBlur={hideBtnDone}
           onSubmitEditing={addTodo}
-          ref={ref}
+          ref={inputRef}
         />
       </View>
       {elementsArray}
       <TouchableOpacity style={s.touchableBtn}>
-        <Text style={s.touchableBtnText} onPress={addTodo}>
-          HIDE CHECKED-OFF ITEMS
-        </Text>
+        <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
       </TouchableOpacity>
     </ScrollView>
   );

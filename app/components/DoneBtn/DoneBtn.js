@@ -4,7 +4,7 @@ import s from './styles';
 
 const DoneBtn = ({ onPress }) => (
   <TouchableOpacity onPress={onPress} style={s.container}>
-    <Text>Done</Text>
+    <Text style={s.text}>Done</Text>
   </TouchableOpacity>
 );
 
