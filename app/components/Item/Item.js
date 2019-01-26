@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, CheckBox } from 'react-native';
+import { View, Text, CheckBox, TouchableOpacity } from 'react-native';
 import s from './styles';
 
-const Item = ({ text, completed }) => (
-  <View style={s.container}>
+const Item = ({ text, completed, onLongPress }) => (
+  <TouchableOpacity style={s.container} onLongPress={onLongPress}>
     <View style={s.checkBox}>
       <CheckBox value={completed} disabled={completed} />
     </View>
@@ -12,7 +12,7 @@ const Item = ({ text, completed }) => (
         {text}
       </Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 export default Item;

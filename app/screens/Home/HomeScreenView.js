@@ -13,7 +13,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import Item from '../../components/Item/Item';
-import Input from '../../components/Input/Input';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -62,51 +61,26 @@ const HomeScreenView = ({
 };
 
 HomeScreenView.navigationOptions = ({ navigation }) => {
-  if (navigation.getParam('showDone')) {
-    <DoneBtn
-      onPress={navigation.getParam('onDonePress')}
-      style={s.doneBtn}
-    />;
-  } else if (navigation.getParam('isLoading')) {
-    <ActivityIndicator
-      size={30}
-      color="#B71C1C"
-      style={s.activityIndicator}
-    />;
-  } else {
-    null;
-  }
-  return {
-    title: 'My shopping list',
-    // headerRight: () => {
-    //   if (navigation.getParam('showDone')) {
-    //     <DoneBtn
-    //       onPress={navigation.getParam('onDonePress')}
-    //       style={s.doneBtn}
-    //     />;
-    //   } else if (navigation.getParam('isLoading')) {
-    //     <ActivityIndicator
-    //       size={30}
-    //       color="#B71C1C"
-    //       style={s.activityIndicator}
-    //     />;
-    //   } else {
-    //     null;
-    //   }
-    // },
-
-    headerRight: navigation.getParam('showDone') ? (
-      <DoneBtn
-        onPress={navigation.getParam('onDonePress')}
-        style={s.doneBtn}
-      />
-    ) : navigation.getParam('isLoading') ? (
+  let headerRight;
+  if (navigation.getParam('isLoading')) {
+    headerRight = (
       <ActivityIndicator
         size={30}
         color="#B71C1C"
         style={s.activityIndicator}
       />
-    ) : null,
+    );
+  } else if (navigation.getParam('showDone')) {
+    headerRight = (
+      <DoneBtn
+        onPress={navigation.getParam('onDonePress')}
+        style={s.doneBtn}
+      />
+    );
+  }
+  return {
+    title: 'My shopping list',
+    headerRight,
     headerTitleStyle: {
       elevation: 6,
     },
