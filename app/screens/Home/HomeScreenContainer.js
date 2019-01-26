@@ -7,16 +7,11 @@ import {
   hoistStatics,
   lifecycle,
   withProps,
-  withPropsOnChange,
-  Alert,
 } from 'recompose';
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
-import setParamOnChange from '../../utils/enhancers/setParamOnChange';
-
-// import AlertDelete from './component/AlertDelete/AlertDelete';
-
-import AlertService from '../../servisces/AlertService';
+import { setParamOnChange } from '../../utils/enhancers';
+import AlertService from '../../services/AlertService';
 
 const mapStateToProps = (state) => ({
   itemsTodo: state.todo.items,
@@ -34,9 +29,7 @@ const enhance = compose(
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
-  withProps(() => ({
-    inputRef: React.createRef(),
-  })),
+  withProps({ inputRef: React.createRef() }),
   lifecycle({
     componentDidMount() {
       this.props.getAll();
