@@ -30,7 +30,7 @@ const enhance = compose(
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
   withProps({ inputRef: React.createRef() }),
-  withState('isEditing', 'setIsEditing', false),
+  withState('idItemIsEditing', 'setIdItemIsEditing', ''),
   lifecycle({
     componentDidMount() {
       this.props.getAll();
@@ -43,10 +43,8 @@ const enhance = compose(
       props.setNewTaskInputText('');
     },
 
-    toggleEditing: (props) => () => {
-      console.log('toggle====================', props.isEditing);
-      props.setIsEditing(!props.isEditing);
-      console.log('toggle==============222222', props.isEditing);
+    toggleEditing: (props) => (id) => {
+      props.setIdItemIsEditing(id);
     },
   }),
   withHandlers({

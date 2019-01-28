@@ -13,27 +13,29 @@ const Item = ({
   text,
   completed,
   onLongPress,
-  isEditing,
+  idItemIsEditing,
   toggleEditing,
+  id,
 }) => {
-  const editingField = isEditing ? (
-    <View style={s.container}>
-      <View style={s.containerInput}>
-        <TextInput autoFocus />
+  const editingField =
+    idItemIsEditing === id ? (
+      <View style={s.container}>
+        <View style={s.containerInput}>
+          <TextInput autoFocus />
+        </View>
       </View>
-    </View>
-  ) : (
-    <View style={s.task}>
-      <Text style={completed ? s.completedTask : s.textTask}>
-        {text}
-      </Text>
-    </View>
-  );
+    ) : (
+      <View style={s.task}>
+        <Text style={completed ? s.completedTask : s.textTask}>
+          {text}
+        </Text>
+      </View>
+    );
   return (
     <TouchableOpacity
       style={s.container}
       onLongPress={onLongPress}
-      onPress={toggleEditing}
+      onPress={() => toggleEditing(id)}
     >
       <View style={s.checkBox}>
         <CheckBox value={completed} disabled={completed} />
