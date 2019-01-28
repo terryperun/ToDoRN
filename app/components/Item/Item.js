@@ -16,11 +16,14 @@ const Item = ({
   idItemIsEditing,
   toggleEditing,
   id,
-  newTaskInputText,
+  // newTaskInputText,
   showBtnDone,
   hideBtnDone,
-  addTodo,
-  setNewTaskInputText,
+  // addTodo,
+  editTodo,
+  // setNewTaskInputText,
+  editTaskInputText,
+  setEditTaskInputText,
 }) => {
   const editingField =
     idItemIsEditing === id ? (
@@ -28,11 +31,14 @@ const Item = ({
         <View style={s.containerInput}>
           <TextInput
             autoFocus
-            value={newTaskInputText}
+            value={editTaskInputText}
+            // value={newTaskInputText}
             onFocus={showBtnDone}
             onBlur={hideBtnDone}
-            onSubmitEditing={addTodo}
-            onChangeText={setNewTaskInputText}
+            onSubmitEditing={() => editTodo(id, text)}
+            // onSubmitEditing={addTodo}
+            onChangeText={setEditTaskInputText}
+            // onChangeText={setNewTaskInputText}
           />
         </View>
       </View>

@@ -2,10 +2,10 @@ import * as actions from './todoActions';
 import Api from '../../api/Api';
 import { createTask } from '../../utils/creators';
 
-export const addTodo = (textTask) => async (dispatch) => {
-  const task = createTask(textTask);
+export const addTodo = (text) => async (dispatch) => {
+  const task = createTask(text);
   dispatch(actions.addTodoStart(task));
-
+  // console.log('IN OPERATIONNNNNNNNNNNNN', task);
   try {
     const newTask = await Api.add(task);
     const { id } = task;
@@ -37,11 +37,15 @@ export const removeTodo = (id) => async (dispatch) => {
   }
 };
 
-export const updateTodo = (id, body) => async (dispatch) => {
+export const updateTodo = (id, text) => async (dispatch) => {
   dispatch(actions.updateTodoStart());
+  const body = createTask(text, id);
+  console.log('IN OPERATION UPDATE TODO -BODY', body);
   try {
-    const newTodo = await Api.update(id, body);
-    dispatch(actions.updateTodoOk({ newTodo, id }));
+    console.log('ID IN TRYYYYYYYYYYYYYYYYYYYYYYYYYYY', id);
+    console.log('BODY IN TRYYYYYYYYYYYYYYYYYYYYYYYYY', body);
+    const updateItem = await Api.update(id, body);
+    dispatch(actions.updateTodoOk({ id, updateItem }));
   } catch (error) {
     dispatch(actions.updateTodoError({ message: error.message }));
   }

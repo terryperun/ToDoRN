@@ -80,7 +80,7 @@ const todoReducer = handleActions(
         if (todo.id !== action.payload.id) {
           return todo;
         }
-        return action.payload.newTask;
+        return action.payload.updateItem;
       }),
     }),
 

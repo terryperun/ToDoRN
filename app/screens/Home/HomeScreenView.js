@@ -26,7 +26,11 @@ const HomeScreenView = ({
   removeTodo,
   toggleEditing,
   // isEditing,
-  // idItemIsEditing,
+  idItemIsEditing,
+  //
+  editTaskInputText,
+  setEditTaskInputText,
+  editTodo,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
     <Item
@@ -38,11 +42,11 @@ const HomeScreenView = ({
       toggleEditing={toggleEditing}
       idItemIsEditing={idItemIsEditing}
       id={item.id}
-      newTaskInputText={newTaskInputText}
+      editTaskInputText={editTaskInputText}
       showBtnDone={showBtnDone}
       hideBtnDone={hideBtnDone}
-      addTodo={addTodo}
-      setNewTaskInputText={setNewTaskInputText}
+      editTodo={editTodo}
+      setEditTaskInputText={setEditTaskInputText}
     />
   ));
   return (

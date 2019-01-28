@@ -26,11 +26,13 @@ const enhance = compose(
       addTodo: todoOperations.addTodo,
       getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
+      updateTodo: todoOperations.updateTodo,
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
-  withProps({ inputRef: React.createRef() }),
+  withState('editTaskInputText', 'setEditTaskInputText', ''),
   withState('idItemIsEditing', 'setIdItemIsEditing', ''),
+  withProps({ inputRef: React.createRef() }),
   lifecycle({
     componentDidMount() {
       this.props.getAll();
@@ -45,12 +47,11 @@ const enhance = compose(
 
     toggleEditing: (props) => (id, text) => {
       props.setIdItemIsEditing(id);
-      props.setNewTaskInputText(text);
+      props.setEditTaskInputText(text);
     },
 
-    editTodo: (props) => (id, body) => {
-      props.editTodo(id, body);
-      props.setIdItemIsEditing('');
+    editTodo: (props) => (id) => {
+      props.updateTodo(id, props.editTaskInputText);
     },
   }),
   withHandlers({
