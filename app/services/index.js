@@ -1,1 +1,1 @@
-export { default as alertService } from './AlertService';
+export { default as AlertService } from './AlertService';
