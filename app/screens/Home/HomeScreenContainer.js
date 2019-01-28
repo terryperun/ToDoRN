@@ -26,13 +26,9 @@ const enhance = compose(
       addTodo: todoOperations.addTodo,
       getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
-      updateTodo: todoOperations.updateTodo,
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
-  withState('editTaskInputText', 'setEditTaskInputText', ''),
-  withState('idItemIsEditing', 'setIdItemIsEditing', ''),
-  // withState('isEditing', 'setIsEditing', false),
   withProps({ inputRef: React.createRef() }),
   lifecycle({
     componentDidMount() {
@@ -40,25 +36,10 @@ const enhance = compose(
     },
   }),
   withHandlers({
-    editTodo: (props) => (id) => {
-      props.updateTodo(id, props.editTaskInputText);
-      props.setIdItemIsEditing('');
-    },
-  }),
-  withHandlers({
     addTodo: (props) => () => {
       props.addTodo(props.newTaskInputText);
       props.inputRef.current.blur();
       props.setNewTaskInputText('');
-    },
-
-    toggleEditing: (props) => (id, text) => {
-      props.setIdItemIsEditing(id);
-      props.setEditTaskInputText(text);
-      // props.navigation.setParams({
-      //   showEditDone: true,
-      //   onDoneEdit: props.editTodo(id),
-      // });
     },
   }),
   withHandlers({
@@ -75,7 +56,6 @@ const enhance = compose(
     hideBtnDone: (props) => () => {
       props.navigation.setParams({
         showDone: false,
-        // showEditDone: false,
       });
     },
   }),

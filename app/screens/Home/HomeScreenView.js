@@ -12,7 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
-import Item from '../../components/Item/Item';
+import ItemView from '../../components/Item/ItemContainer';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -23,27 +23,15 @@ const HomeScreenView = ({
   hideBtnDone,
   inputRef,
   removeTodo,
-  toggleEditing,
-  idItemIsEditing,
-  editTaskInputText,
-  setEditTaskInputText,
-  editTodo,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
-    <Item
+    <ItemView
       key={item.id}
       text={item.text}
       completed={item.completed}
       style={s.task}
       onLongPress={() => removeTodo(item.id)}
-      toggleEditing={toggleEditing}
-      idItemIsEditing={idItemIsEditing}
       id={item.id}
-      editTaskInputText={editTaskInputText}
-      showBtnDone={showBtnDone}
-      hideBtnDone={hideBtnDone}
-      editTodo={editTodo}
-      setEditTaskInputText={setEditTaskInputText}
     />
   ));
   return (
@@ -83,13 +71,6 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
         style={s.activityIndicator}
       />
     );
-    // } else if (navigation.getParam('showEditDone')) {
-    //   headerRight = (
-    //     <DoneBtn
-    //       onPress={navigation.getParam('onDoneEdit')}
-    //       style={s.doneBtn}
-    //     />
-    //   );
   } else if (navigation.getParam('showDone')) {
     headerRight = (
       <DoneBtn
