@@ -26,7 +26,7 @@ const HomeScreenView = ({
   removeTodo,
   toggleEditing,
   // isEditing,
-  idItemIsEditing,
+  // idItemIsEditing,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
     <Item
@@ -38,6 +38,11 @@ const HomeScreenView = ({
       toggleEditing={toggleEditing}
       idItemIsEditing={idItemIsEditing}
       id={item.id}
+      newTaskInputText={newTaskInputText}
+      showBtnDone={showBtnDone}
+      hideBtnDone={hideBtnDone}
+      addTodo={addTodo}
+      setNewTaskInputText={setNewTaskInputText}
     />
   ));
   return (
@@ -57,7 +62,6 @@ const HomeScreenView = ({
           onBlur={hideBtnDone}
           onSubmitEditing={addTodo}
           ref={inputRef}
-          autoFocus
         />
       </View>
       {elementsArray}

@@ -43,8 +43,14 @@ const enhance = compose(
       props.setNewTaskInputText('');
     },
 
-    toggleEditing: (props) => (id) => {
+    toggleEditing: (props) => (id, text) => {
       props.setIdItemIsEditing(id);
+      props.setNewTaskInputText(text);
+    },
+
+    editTodo: (props) => (id, body) => {
+      props.editTodo(id, body);
+      props.setIdItemIsEditing('');
     },
   }),
   withHandlers({

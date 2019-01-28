@@ -4,10 +4,10 @@ import {
   Text,
   CheckBox,
   TouchableOpacity,
-  ScrollView,
+  TextInput,
 } from 'react-native';
+
 import s from './styles';
-import { TextInput } from 'react-native-gesture-handler';
 
 const Item = ({
   text,
@@ -16,12 +16,24 @@ const Item = ({
   idItemIsEditing,
   toggleEditing,
   id,
+  newTaskInputText,
+  showBtnDone,
+  hideBtnDone,
+  addTodo,
+  setNewTaskInputText,
 }) => {
   const editingField =
     idItemIsEditing === id ? (
-      <View style={s.container}>
+      <View style={s.containerEditing}>
         <View style={s.containerInput}>
-          <TextInput autoFocus />
+          <TextInput
+            autoFocus
+            value={newTaskInputText}
+            onFocus={showBtnDone}
+            onBlur={hideBtnDone}
+            onSubmitEditing={addTodo}
+            onChangeText={setNewTaskInputText}
+          />
         </View>
       </View>
     ) : (
@@ -35,7 +47,7 @@ const Item = ({
     <TouchableOpacity
       style={s.container}
       onLongPress={onLongPress}
-      onPress={() => toggleEditing(id)}
+      onPress={() => toggleEditing(id, text)}
     >
       <View style={s.checkBox}>
         <CheckBox value={completed} disabled={completed} />

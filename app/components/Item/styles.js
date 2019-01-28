@@ -23,6 +23,18 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
     color: '#9E9E9E',
   },
+
+  containerEditing: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: '#d6d7da',
+    backgroundColor: 'white',
+  },
+  textInput: {
+    height: 60,
+    flex: 1,
+  },
 });
 
 export default styles;
