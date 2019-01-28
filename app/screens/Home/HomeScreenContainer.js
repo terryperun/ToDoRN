@@ -11,7 +11,7 @@ import {
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
 import { setParamOnChange } from '../../utils/enhancers';
-import AlertService from '../../services/AlertService';
+import { AlertService } from '../../services';
 
 const mapStateToProps = (state) => ({
   itemsTodo: state.todo.items,
