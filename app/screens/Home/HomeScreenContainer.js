@@ -30,6 +30,7 @@ const enhance = compose(
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
   withProps({ inputRef: React.createRef() }),
+  withState('isEditing', 'setIsEditing', false),
   lifecycle({
     componentDidMount() {
       this.props.getAll();
@@ -40,6 +41,12 @@ const enhance = compose(
       props.addTodo(props.newTaskInputText);
       props.inputRef.current.blur();
       props.setNewTaskInputText('');
+    },
+
+    toggleEditing: (props) => () => {
+      console.log('toggle====================', props.isEditing);
+      props.setIsEditing(!props.isEditing);
+      console.log('toggle==============222222', props.isEditing);
     },
   }),
   withHandlers({

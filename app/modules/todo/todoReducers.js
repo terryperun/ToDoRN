@@ -66,6 +66,28 @@ const todoReducer = handleActions(
       ...state,
       error: action.payload,
     }),
+
+    [types.UPDATE_TODO_START]: (state, action) => ({
+      ...state,
+      isLoading: true,
+      error: null,
+    }),
+
+    [types.UPDATE_TODO_OK]: (state, action) => ({
+      ...state,
+      isLoading: false,
+      items: state.items.map((todo) => {
+        if (todo.id !== action.payload.id) {
+          return todo;
+        }
+        return action.payload.newTask;
+      }),
+    }),
+
+    [types.UPDATE_TODO_ERROR]: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
   },
   initialState,
 );

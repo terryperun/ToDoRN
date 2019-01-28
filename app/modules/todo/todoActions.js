@@ -16,3 +16,7 @@ export const getAllTodosError = createAction(
 export const removeTodoStart = createAction(types.REMOVE_TODO_START);
 export const removeTodoOk = createAction(types.REMOVE_TODO_OK);
 export const removeTodoError = createAction(types.REMOVE_TODO_ERROR);
+
+export const updateTodoStart = createAction(types.UPDATE_TODO_START);
+export const updateTodoOk = createAction(types.UPDATE_TODO_OK);
+export const updateTodoError = createAction(types.UPDATE_TODO_ERROR);

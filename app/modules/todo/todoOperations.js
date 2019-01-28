@@ -36,3 +36,13 @@ export const removeTodo = (id) => async (dispatch) => {
     dispatch(actions.removeTodoError({ message: error.message }));
   }
 };
+
+export const updateTodo = (id, body) => async (dispatch) => {
+  dispatch(actions.updateTodoStart());
+  try {
+    const newTodo = await Api.update(id, body);
+    dispatch(actions.updateTodoOk({ newTodo, id }));
+  } catch (error) {
+    dispatch(actions.updateTodoError({ message: error.message }));
+  }
+};
