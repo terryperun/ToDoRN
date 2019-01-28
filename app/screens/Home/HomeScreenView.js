@@ -13,7 +13,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import s from './styles';
 import DoneBtn from '../../components/DoneBtn/DoneBtn';
 import Item from '../../components/Item/Item';
-import Input from '../../components/Input/Input';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -25,9 +24,7 @@ const HomeScreenView = ({
   inputRef,
   removeTodo,
   toggleEditing,
-  // isEditing,
   idItemIsEditing,
-  //
   editTaskInputText,
   setEditTaskInputText,
   editTodo,
@@ -86,6 +83,13 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
         style={s.activityIndicator}
       />
     );
+    // } else if (navigation.getParam('showEditDone')) {
+    //   headerRight = (
+    //     <DoneBtn
+    //       onPress={navigation.getParam('onDoneEdit')}
+    //       style={s.doneBtn}
+    //     />
+    //   );
   } else if (navigation.getParam('showDone')) {
     headerRight = (
       <DoneBtn

@@ -32,10 +32,17 @@ const enhance = compose(
   withState('newTaskInputText', 'setNewTaskInputText', ''),
   withState('editTaskInputText', 'setEditTaskInputText', ''),
   withState('idItemIsEditing', 'setIdItemIsEditing', ''),
+  // withState('isEditing', 'setIsEditing', false),
   withProps({ inputRef: React.createRef() }),
   lifecycle({
     componentDidMount() {
       this.props.getAll();
+    },
+  }),
+  withHandlers({
+    editTodo: (props) => (id) => {
+      props.updateTodo(id, props.editTaskInputText);
+      props.setIdItemIsEditing('');
     },
   }),
   withHandlers({
@@ -48,10 +55,10 @@ const enhance = compose(
     toggleEditing: (props) => (id, text) => {
       props.setIdItemIsEditing(id);
       props.setEditTaskInputText(text);
-    },
-
-    editTodo: (props) => (id) => {
-      props.updateTodo(id, props.editTaskInputText);
+      // props.navigation.setParams({
+      //   showEditDone: true,
+      //   onDoneEdit: props.editTodo(id),
+      // });
     },
   }),
   withHandlers({
@@ -66,7 +73,10 @@ const enhance = compose(
     },
 
     hideBtnDone: (props) => () => {
-      props.navigation.setParams({ showDone: false });
+      props.navigation.setParams({
+        showDone: false,
+        // showEditDone: false,
+      });
     },
   }),
   setParamOnChange('isLoading'),

@@ -5,7 +5,6 @@ import { createTask } from '../../utils/creators';
 export const addTodo = (text) => async (dispatch) => {
   const task = createTask(text);
   dispatch(actions.addTodoStart(task));
-  // console.log('IN OPERATIONNNNNNNNNNNNN', task);
   try {
     const newTask = await Api.add(task);
     const { id } = task;
