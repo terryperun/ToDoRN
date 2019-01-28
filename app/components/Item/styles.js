@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#d6d7da',
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
   },
   checkBox: {
     justifyContent: 'center',

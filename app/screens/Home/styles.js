@@ -30,7 +30,11 @@ const styles = StyleSheet.create({
     borderColor: '#d6d7da',
   },
   touchableBtnText: {
-    color: '#5699FF',
+    color: '#00AF4C',
+  },
+
+  doneBtn: {
+    marginRight: 15,
   },
 });
 export default styles;
