@@ -71,6 +71,12 @@ const todoReducer = handleActions(
       ...state,
       isLoading: true,
       error: null,
+      items: state.items.map((todo) => {
+        if (todo.id !== action.payload.id) {
+          return todo;
+        }
+        return action.payload.body;
+      }),
     }),
 
     [types.UPDATE_TODO_OK]: (state, action) => ({

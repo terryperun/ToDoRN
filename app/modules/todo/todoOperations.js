@@ -38,12 +38,9 @@ export const removeTodo = (id) => async (dispatch) => {
 };
 
 export const updateTodo = (id, text) => async (dispatch) => {
-  dispatch(actions.updateTodoStart());
   const body = createTask(text, id);
-  console.log('IN OPERATION UPDATE TODO -BODY', body);
+  dispatch(actions.updateTodoStart({ id, body }));
   try {
-    console.log('ID IN TRYYYYYYYYYYYYYYYYYYYYYYYYYYY', id);
-    console.log('BODY IN TRYYYYYYYYYYYYYYYYYYYYYYYYY', body);
     const updateItem = await Api.update(id, body);
     dispatch(actions.updateTodoOk({ id, updateItem }));
   } catch (error) {
