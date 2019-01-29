@@ -11,8 +11,8 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
-import DoneBtn from '../../components/DoneBtn/DoneBtn';
-import ItemView from '../../components/Item/ItemContainer';
+// import DoneBtn from '../../components/DoneBtn/DoneBtn';
+import { ItemTodo, DoneBtn } from '../../components';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -23,15 +23,17 @@ const HomeScreenView = ({
   hideBtnDone,
   inputRef,
   removeTodo,
+  updateTodo,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
-    <ItemView
+    <ItemTodo
       key={item.id}
       text={item.text}
       completed={item.completed}
       style={s.task}
       onLongPress={() => removeTodo(item.id)}
       id={item.id}
+      updateTodo={updateTodo}
     />
   ));
   return (

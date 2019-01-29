@@ -26,6 +26,7 @@ const enhance = compose(
       addTodo: todoOperations.addTodo,
       getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
+      updateTodo: todoOperations.updateTodo,
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
