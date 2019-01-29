@@ -1,4 +1,2 @@
-import TodoItem from './TodoItem/TodoItemContainer';
-import DoneBtn from './DoneBtn/DoneBtn';
-
-export { TodoItem, DoneBtn };
+export { default as TodoItem } from './TodoItem/TodoItemContainer';
+export { default as DoneButton } from './DoneButton/DoneButton';

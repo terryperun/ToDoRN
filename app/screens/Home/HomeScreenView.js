@@ -11,8 +11,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
-// import DoneBtn from '../../components/DoneBtn/DoneBtn';
-import { TodoItem, DoneBtn } from '../../components';
+import { TodoItem, DoneButton } from '../../components';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -75,9 +74,9 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
     );
   } else if (navigation.getParam('showDone')) {
     headerRight = (
-      <DoneBtn
+      <DoneButton
         onPress={navigation.getParam('onDonePress')}
-        style={s.doneBtn}
+        style={s.doneButton}
       />
     );
   }
