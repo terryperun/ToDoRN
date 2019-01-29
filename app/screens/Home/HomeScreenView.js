@@ -12,7 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
 // import DoneBtn from '../../components/DoneBtn/DoneBtn';
-import { ItemTodo, DoneBtn } from '../../components';
+import { TodoItem, DoneBtn } from '../../components';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -26,7 +26,7 @@ const HomeScreenView = ({
   updateTodo,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
-    <ItemTodo
+    <TodoItem
       key={item.id}
       text={item.text}
       completed={item.completed}

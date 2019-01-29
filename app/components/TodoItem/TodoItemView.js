@@ -9,7 +9,7 @@ import {
 
 import s from './styles';
 
-const ItemTodoView = ({
+const TodoItemView = ({
   isEditing,
   setIsEditing,
   textItem,
@@ -48,4 +48,4 @@ const ItemTodoView = ({
   );
 };
 
-export default ItemTodoView;
+export default TodoItemView;

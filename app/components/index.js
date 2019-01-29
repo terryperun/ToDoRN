@@ -1,4 +1,4 @@
-import ItemTodo from './ItemTodo/ItemTodoContainer';
+import TodoItem from './TodoItem/TodoItemContainer';
 import DoneBtn from './DoneBtn/DoneBtn';
 
-export { ItemTodo, DoneBtn };
+export { TodoItem, DoneBtn };

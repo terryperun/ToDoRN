@@ -6,7 +6,7 @@ import {
 } from 'recompose';
 import { withNavigation } from 'react-navigation';
 
-import ItemTodoView from './ItemTodoView';
+import TodoItemView from './TodoItemView';
 
 const enhance = compose(
   withNavigation,
@@ -33,4 +33,4 @@ const enhance = compose(
   }),
 );
 
-export default hoistStatics(enhance)(ItemTodoView);
+export default hoistStatics(enhance)(TodoItemView);
