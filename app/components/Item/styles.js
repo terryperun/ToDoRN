@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#d6d7da',
     backgroundColor: '#FFFFFF',
+    alignItems: 'center',
   },
   checkBox: {
     justifyContent: 'center',
@@ -35,6 +36,13 @@ const styles = StyleSheet.create({
     height: 60,
     flex: 1,
   },
+
+  checkbox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // completedCheckbox: {},
+  // inactiveCheckbox: {},
 });
 
 export default styles;

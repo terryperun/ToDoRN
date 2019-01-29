@@ -36,8 +36,10 @@ export const removeTodo = (id) => async (dispatch) => {
   }
 };
 
-export const updateTodo = (id, text) => async (dispatch) => {
-  const body = createTask(text, id);
+export const updateTodo = (id, text, completed) => async (
+  dispatch,
+) => {
+  const body = createTask(text, id, completed);
   dispatch(actions.updateTodoStart({ id, body }));
   try {
     const updateItem = await Api.update(id, body);
