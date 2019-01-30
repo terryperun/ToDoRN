@@ -33,7 +33,9 @@ const TodoItemView = ({
     </View>
   ) : (
     <View style={s.task}>
-      <Text style={s.textTask}>{textItem}</Text>
+      <Text style={completedStatus ? s.completedTask : s.textTask}>
+        {textItem}
+      </Text>
     </View>
   );
   return (

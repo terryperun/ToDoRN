@@ -24,6 +24,7 @@ const enhance = compose(
       props.navigation.setParams({
         showDone: false,
       });
+      props.setCompletedStatus(value);
     },
   }),
   withHandlers({
