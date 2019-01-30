@@ -18,16 +18,12 @@ const enhance = compose(
     (props) => props.completed,
   ),
   withHandlers({
-    onSubmit: (props) => () => {
+    onSubmit: (props) => (value) => {
       props.setIsEditing(false);
-      props.updateTodo(props.id, props.textItem, props.completedItem);
+      props.updateTodo(props.id, props.textItem, value);
       props.navigation.setParams({
         showDone: false,
       });
-      // console.log(
-      //   '============================================',
-      //   props.completedItem,
-      // );
     },
   }),
   withHandlers({

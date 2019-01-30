@@ -18,6 +18,8 @@ const TodoItemView = ({
   onPress,
   setTextItem,
   onLongPress,
+  completedStatus,
+  setCompletedStatus,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -41,7 +43,10 @@ const TodoItemView = ({
       onLongPress={onLongPress}
     >
       <View style={s.checkBox}>
-        <CheckBox value={completed} disabled={completed} />
+        <CheckBox
+          value={completedStatus}
+          onValueChange={(value) => onSubmit(value)}
+        />
       </View>
       {editingField}
     </TouchableOpacity>
