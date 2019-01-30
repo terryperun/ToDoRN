@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     color: '#00AF4C',
   },
 
-  doneBtn: {
+  doneButton: {
     marginRight: 15,
   },
 });

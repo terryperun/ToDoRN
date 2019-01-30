@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import {
   compose,
   withState,
@@ -7,18 +6,10 @@ import {
 } from 'recompose';
 import { withNavigation } from 'react-navigation';
 
-import ItemView from './ItemView';
-import { todoOperations } from '../../modules/todo';
-
-const mapStateToProps = (state) => ({});
+import TodoItemView from './TodoItemView';
 
 const enhance = compose(
-  connect(
-    mapStateToProps,
-    {
-      updateTodo: todoOperations.updateTodo,
-    },
-  ),
+  withNavigation,
   withState('isEditing', 'setIsEditing', false),
   withState('textItem', 'setTextItem', (props) => props.text),
   withState(
@@ -51,4 +42,4 @@ const enhance = compose(
   }),
 );
 
-export default withNavigation(hoistStatics(enhance)(ItemView));
+export default hoistStatics(enhance)(TodoItemView);

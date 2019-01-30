@@ -25,9 +25,7 @@ const styles = StyleSheet.create({
     color: '#9E9E9E',
   },
 
-  containerEditing: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  containerInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: '#d6d7da',
     backgroundColor: 'white',
