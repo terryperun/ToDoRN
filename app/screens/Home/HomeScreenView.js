@@ -24,17 +24,38 @@ const HomeScreenView = ({
   removeTodo,
   updateTodo,
 }) => {
-  const elementsArray = itemsTodo.map((item) => (
-    <TodoItem
-      key={item.id}
-      text={item.text}
-      completed={item.completed}
-      style={s.task}
-      onLongPress={() => removeTodo(item.id)}
-      id={item.id}
-      updateTodo={updateTodo}
-    />
-  ));
+  const elementsArray = itemsTodo.map((item) => {
+    if (item.completed === true) {
+      return undefined;
+    }
+    return (
+      <TodoItem
+        key={item.id}
+        text={item.text}
+        completed={item.completed}
+        style={s.task}
+        onLongPress={() => removeTodo(item.id)}
+        id={item.id}
+        updateTodo={updateTodo}
+      />
+    );
+  });
+  const doneElementsArray = itemsTodo.map((item) => {
+    if (item.completed !== true) {
+      return undefined;
+    }
+    return (
+      <TodoItem
+        key={item.id}
+        text={item.text}
+        completed={item.completed}
+        style={s.task}
+        onLongPress={() => removeTodo(item.id)}
+        id={item.id}
+        updateTodo={updateTodo}
+      />
+    );
+  });
   return (
     <ScrollView style={s.container}>
       <View style={s.containerInput}>
@@ -58,6 +79,7 @@ const HomeScreenView = ({
       <TouchableOpacity style={s.touchableBtn}>
         <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
       </TouchableOpacity>
+      {doneElementsArray}
     </ScrollView>
   );
 };
