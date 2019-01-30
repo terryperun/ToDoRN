@@ -18,8 +18,6 @@ const TodoItemView = ({
   onPress,
   setTextItem,
   onLongPress,
-  completedStatus,
-  setCompletedStatus,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -27,13 +25,13 @@ const TodoItemView = ({
         autoFocus
         onChangeText={(text) => setTextItem(text)}
         value={textItem}
-        onSubmitEditing={onSubmit}
+        onSubmitEditing={() => onSubmit()}
         style={s.textInput}
       />
     </View>
   ) : (
     <View style={s.task}>
-      <Text style={completedStatus ? s.completedTask : s.textTask}>
+      <Text style={completed ? s.completedTask : s.textTask}>
         {textItem}
       </Text>
     </View>
@@ -44,9 +42,9 @@ const TodoItemView = ({
       onPress={onPress}
       onLongPress={onLongPress}
     >
-      <View style={s.checkBox}>
+      <View style={s.checkBoxContainer}>
         <CheckBox
-          value={completedStatus}
+          value={completed}
           onValueChange={(value) => onSubmit(value)}
         />
       </View>

@@ -12,19 +12,16 @@ const enhance = compose(
   withNavigation,
   withState('isEditing', 'setIsEditing', false),
   withState('textItem', 'setTextItem', (props) => props.text),
-  withState(
-    'completedStatus',
-    'setCompletedStatus',
-    (props) => props.completed,
-  ),
   withHandlers({
     onSubmit: (props) => (value) => {
       props.setIsEditing(false);
-      props.updateTodo(props.id, props.textItem, value);
+      props.updateTodo(props.id, {
+        text: props.textItem,
+        completed: value,
+      });
       props.navigation.setParams({
         showDone: false,
       });
-      props.setCompletedStatus(value);
     },
   }),
   withHandlers({

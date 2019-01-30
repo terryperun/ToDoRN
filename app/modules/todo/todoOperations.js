@@ -2,14 +2,13 @@ import * as actions from './todoActions';
 import Api from '../../api/Api';
 import { createTask } from '../../utils/creators';
 
-export const addTodo = (text) => async (dispatch) => {
-  const task = createTask(text);
-  dispatch(actions.addTodoStart(task));
+export const addTodo = (body) => async (dispatch) => {
+  const todo = createTask(undefined, body);
+  dispatch(actions.addTodoStart(todo));
   try {
-    const newTask = await Api.add(task);
-    const { id } = task;
-
-    dispatch(actions.addTodoOk({ newTask, id }));
+    const newTodo = await Api.add(todo);
+    const { id } = todo;
+    dispatch(actions.addTodoOk({ newTodo, id }));
   } catch (error) {
     dispatch(actions.addTodoError({ message: error.message }));
   }
@@ -36,13 +35,11 @@ export const removeTodo = (id) => async (dispatch) => {
   }
 };
 
-export const updateTodo = (id, text, completed) => async (
-  dispatch,
-) => {
-  const body = createTask(text, id, completed);
-  dispatch(actions.updateTodoStart({ id, body }));
+export const updateTodo = (id, body) => async (dispatch) => {
+  const todo = createTask(id, body);
+  dispatch(actions.updateTodoStart({ id, todo }));
   try {
-    const updateItem = await Api.update(id, body);
+    const updateItem = await Api.update(id, todo);
     dispatch(actions.updateTodoOk({ id, updateItem }));
   } catch (error) {
     dispatch(actions.updateTodoError({ message: error.message }));

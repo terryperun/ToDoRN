@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
   },
-  checkBox: {
+  checkBoxContainer: {
     justifyContent: 'center',
     paddingRight: 10,
     paddingLeft: 10,
@@ -34,13 +34,6 @@ const styles = StyleSheet.create({
     height: 60,
     flex: 1,
   },
-
-  checkbox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // completedCheckbox: {},
-  // inactiveCheckbox: {},
 });
 
 export default styles;
