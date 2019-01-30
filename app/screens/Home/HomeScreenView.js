@@ -11,9 +11,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
-import DoneBtn from '../../components/DoneBtn/DoneBtn';
-import Item from '../../components/Item/Item';
-import Input from '../../components/Input/Input';
+import { TodoItem, DoneButton } from '../../components';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -24,14 +22,17 @@ const HomeScreenView = ({
   hideBtnDone,
   inputRef,
   removeTodo,
+  updateTodo,
 }) => {
   const elementsArray = itemsTodo.map((item) => (
-    <Item
+    <TodoItem
       key={item.id}
       text={item.text}
       completed={item.completed}
       style={s.task}
       onLongPress={() => removeTodo(item.id)}
+      id={item.id}
+      updateTodo={updateTodo}
     />
   ));
   return (
@@ -73,9 +74,9 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
     );
   } else if (navigation.getParam('showDone')) {
     headerRight = (
-      <DoneBtn
+      <DoneButton
         onPress={navigation.getParam('onDonePress')}
-        style={s.doneBtn}
+        style={s.doneButton}
       />
     );
   }

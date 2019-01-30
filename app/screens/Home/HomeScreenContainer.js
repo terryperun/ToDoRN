@@ -26,6 +26,7 @@ const enhance = compose(
       addTodo: todoOperations.addTodo,
       getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
+      updateTodo: todoOperations.updateTodo,
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
@@ -54,7 +55,9 @@ const enhance = compose(
     },
 
     hideBtnDone: (props) => () => {
-      props.navigation.setParams({ showDone: false });
+      props.navigation.setParams({
+        showDone: false,
+      });
     },
   }),
   setParamOnChange('isLoading'),
