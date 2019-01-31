@@ -2,10 +2,10 @@ import React from 'react';
 import {
   View,
   Text,
-  CheckBox,
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import CheckBox from 'react-native-check-box';
 
 import s from './styles';
 
@@ -44,8 +44,10 @@ const TodoItemView = ({
     >
       <View style={s.checkBoxContainer}>
         <CheckBox
-          value={completed}
-          onValueChange={(value) => onSubmit(value)}
+          style={s.CheckBox}
+          isChecked={completed}
+          onClick={() => onSubmit(!completed)}
+          checkBoxColor="#757575"
         />
       </View>
       {editingField}
