@@ -38,7 +38,7 @@ const enhance = compose(
   }),
   withHandlers({
     addTodo: (props) => () => {
-      props.addTodo({ text: props.newTaskInputText });
+      props.addTodo(props.newTaskInputText);
       props.inputRef.current.blur();
       props.setNewTaskInputText('');
     },
