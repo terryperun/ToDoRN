@@ -6,16 +6,6 @@ const styles = StyleSheet.create({
   activityIndicator: {
     paddingRight: 5,
   },
-  touchableBtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#d6d7da',
-  },
-  touchableBtnText: {
-    color: '#00AF4C',
-  },
 
   doneButton: {
     marginRight: 15,

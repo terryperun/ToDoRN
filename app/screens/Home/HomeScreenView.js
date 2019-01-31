@@ -8,7 +8,12 @@ import {
 } from 'react-native';
 
 import s from './styles';
-import { TodoItem, DoneButton, AddTodoInput } from '../../components';
+import {
+  TodoItem,
+  DoneButton,
+  AddTodoInput,
+  HideTodoButton,
+} from '../../components';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -44,9 +49,7 @@ const HomeScreenView = ({
         ref={inputRef}
       />
       {elementsArray}
-      <TouchableOpacity style={s.touchableBtn}>
-        <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
-      </TouchableOpacity>
+      <HideTodoButton />
     </ScrollView>
   );
 };
