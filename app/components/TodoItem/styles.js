@@ -7,8 +7,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#d6d7da',
     backgroundColor: '#FFFFFF',
+    alignItems: 'center',
   },
-  checkBox: {
+  checkBoxContainer: {
     justifyContent: 'center',
     paddingRight: 10,
     paddingLeft: 10,

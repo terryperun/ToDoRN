@@ -22,7 +22,7 @@ const todoReducer = handleActions(
         if (todo.id !== action.payload.id) {
           return todo;
         }
-        return action.payload.newTask;
+        return action.payload.newTodo;
       }),
     }),
 
@@ -75,7 +75,7 @@ const todoReducer = handleActions(
         if (todo.id !== action.payload.id) {
           return todo;
         }
-        return action.payload.body;
+        return Object.assign({}, todo, action.payload.patch);
       }),
     }),
 
@@ -86,7 +86,7 @@ const todoReducer = handleActions(
         if (todo.id !== action.payload.id) {
           return todo;
         }
-        return action.payload.updateItem;
+        return action.payload.updatedItem;
       }),
     }),
 

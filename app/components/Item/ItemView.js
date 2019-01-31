@@ -9,29 +9,30 @@ import {
 
 import s from './styles';
 
-const TodoItemView = ({
+const ItemView = ({
   isEditing,
-  setIsEditing,
   textItem,
-  completed,
   onSubmit,
   onPress,
   setTextItem,
   onLongPress,
+  completedStatus,
+  setCompletedStatus,
 }) => {
   const editingField = isEditing ? (
-    <View style={s.containerInput}>
-      <TextInput
-        autoFocus
-        onChangeText={(text) => setTextItem(text)}
-        value={textItem}
-        onSubmitEditing={() => onSubmit()}
-        style={s.textInput}
-      />
+    <View style={s.containerEditing}>
+      <View style={s.containerInput}>
+        <TextInput
+          autoFocus
+          onChangeText={(text) => setTextItem(text)}
+          value={textItem}
+          onSubmitEditing={onSubmit}
+        />
+      </View>
     </View>
   ) : (
     <View style={s.task}>
-      <Text style={completed ? s.completedTask : s.textTask}>
+      <Text style={completedStatus ? s.completedTask : s.textTask}>
         {textItem}
       </Text>
     </View>
@@ -44,8 +45,10 @@ const TodoItemView = ({
     >
       <View style={s.checkBoxContainer}>
         <CheckBox
-          value={completed}
-          onValueChange={(value) => onSubmit(value)}
+          value={completedStatus}
+          //  disabled={completed}
+          onValueChange={setCompletedStatus}
+          style={s.checkbox}
         />
       </View>
       {editingField}
@@ -53,4 +56,4 @@ const TodoItemView = ({
   );
 };
 
-export default TodoItemView;
+export default ItemView;

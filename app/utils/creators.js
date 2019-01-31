@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4';
 
-export const createTask = (text, id) => ({
-  id: id || uuid(),
-  text: text || '',
+export const createTask = (text = '') => ({
+  id: uuid(),
+  text,
   completed: false,
 });
