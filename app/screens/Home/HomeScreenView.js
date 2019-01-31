@@ -1,17 +1,14 @@
 import React from 'react';
 import {
-  View,
   Text,
-  TextInput,
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import s from './styles';
-import { TodoItem, DoneButton } from '../../components';
+import { TodoItem, DoneButton, AddTodoInput } from '../../components';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -37,23 +34,15 @@ const HomeScreenView = ({
   ));
   return (
     <ScrollView style={s.container}>
-      <View style={s.containerInput}>
-        <MaterialCommunityIcons
-          name="plus"
-          size={30}
-          style={s.icon}
-        />
-        <TextInput
-          placeholder="Add item"
-          style={s.textInput}
-          onChangeText={setNewTaskInputText}
-          value={newTaskInputText}
-          onFocus={showBtnDone}
-          onBlur={hideBtnDone}
-          onSubmitEditing={addTodo}
-          ref={inputRef}
-        />
-      </View>
+      <AddTodoInput
+        placeholder="Add item"
+        onChangeText={setNewTaskInputText}
+        value={newTaskInputText}
+        onFocus={showBtnDone}
+        onBlur={hideBtnDone}
+        onSubmitEditing={addTodo}
+        ref={inputRef}
+      />
       {elementsArray}
       <TouchableOpacity style={s.touchableBtn}>
         <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
