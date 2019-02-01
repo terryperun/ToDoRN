@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  Text,
   ActivityIndicator,
-  TouchableOpacity,
   StyleSheet,
-  ScrollView,
+  SectionList,
 } from 'react-native';
 
 import s from './styles';
@@ -26,31 +24,56 @@ const HomeScreenView = ({
   removeTodo,
   updateTodo,
 }) => {
-  const elementsArray = itemsTodo.map((item) => (
-    <TodoItem
-      key={item.id}
-      text={item.text}
-      completed={item.completed}
-      style={s.task}
-      onLongPress={() => removeTodo(item.id)}
-      id={item.id}
-      updateTodo={updateTodo}
-    />
-  ));
+  const sections = itemsTodo.reduce(
+    ([newTodos, doneTodos], item) => {
+      if (!item.completed) {
+        newTodos.data.push(item);
+      } else {
+        doneTodos.data.push(item);
+      }
+      return [newTodos, doneTodos];
+    },
+    [
+      {
+        headerSection: () => (
+          <AddTodoInput
+            placeholder="Add item"
+            onChangeText={setNewTaskInputText}
+            value={newTaskInputText}
+            onFocus={showBtnDone}
+            onBlur={hideBtnDone}
+            onSubmitEditing={addTodo}
+            ref={inputRef}
+          />
+        ),
+        data: [],
+      },
+      {
+        headerSection: () => <HideTodoButton />,
+        data: [],
+      },
+    ],
+  );
   return (
-    <ScrollView style={s.container}>
-      <AddTodoInput
-        placeholder="Add item"
-        onChangeText={setNewTaskInputText}
-        value={newTaskInputText}
-        onFocus={showBtnDone}
-        onBlur={hideBtnDone}
-        onSubmitEditing={addTodo}
-        ref={inputRef}
-      />
-      {elementsArray}
-      <HideTodoButton />
-    </ScrollView>
+    <SectionList
+      renderSectionHeader={({ section }) =>
+        section.headerSection && section.headerSection()
+      }
+      renderItem={({ item }) => (
+        <TodoItem
+          key={item.id}
+          text={item.text}
+          completed={item.completed}
+          style={s.task}
+          onLongPress={() => removeTodo(item.id)}
+          id={item.id}
+          updateTodo={updateTodo}
+        />
+      )}
+      sections={sections}
+      keyExtractor={(item) => item.id}
+      stickySectionHeadersEnabled
+    />
   );
 };
 
