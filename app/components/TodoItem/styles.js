@@ -1,34 +1,41 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 60,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#d6d7da',
-    backgroundColor: '#FFFFFF',
+    borderBottomColor: colors.border,
+    backgroundColor: colors.white,
     alignItems: 'center',
   },
+
   checkBoxContainer: {
     justifyContent: 'center',
-    paddingRight: 10,
-    paddingLeft: 10,
   },
+
+  CheckBox: {
+    paddingHorizontal: 19,
+    paddingVertical: 19,
+  },
+
   task: {
     justifyContent: 'center',
   },
+
   textTask: {
-    color: '#212121',
+    color: colors.text,
   },
+
   completedTask: {
     textDecorationLine: 'line-through',
-    color: '#9E9E9E',
+    color: colors.grayText,
   },
 
   containerInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#d6d7da',
-    backgroundColor: 'white',
+    borderColor: colors.border,
   },
   textInput: {
     height: 60,

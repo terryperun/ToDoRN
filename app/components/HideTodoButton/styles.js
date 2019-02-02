@@ -3,15 +3,16 @@ import { colors } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
     backgroundColor: colors.background,
   },
-  task: {},
-  activityIndicator: {
-    paddingRight: 16,
-  },
-
-  doneButton: {
-    marginRight: 16,
+  buttonText: {
+    color: colors.accent,
   },
 });
+
 export default styles;

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '../../styles';
 
 const style = StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ const style = StyleSheet.create({
   text: {
     fontWeight: '400',
     fontSize: 16,
-    color: '#00AF4C',
+    color: colors.accent,
   },
 });
 

@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  CheckBox,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { View, Text, TextInput } from 'react-native';
+import CheckBox from 'react-native-check-box';
 
+import { Touchable } from '../../components';
 import s from './styles';
+import { colors } from '../../styles';
 
 const TodoItemView = ({
   isEditing,
@@ -37,19 +34,19 @@ const TodoItemView = ({
     </View>
   );
   return (
-    <TouchableOpacity
-      style={s.container}
-      onPress={onPress}
-      onLongPress={onLongPress}
-    >
-      <View style={s.checkBoxContainer}>
-        <CheckBox
-          value={completed}
-          onValueChange={(value) => onSubmit(value)}
-        />
+    <Touchable onPress={onPress} onLongPress={onLongPress}>
+      <View style={s.container}>
+        <View style={s.checkBoxContainer}>
+          <CheckBox
+            style={s.CheckBox}
+            isChecked={completed}
+            onClick={() => onSubmit(!completed)}
+            checkBoxColor={colors.icon}
+          />
+        </View>
+        {editingField}
       </View>
-      {editingField}
-    </TouchableOpacity>
+    </Touchable>
   );
 };
 

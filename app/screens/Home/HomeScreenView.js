@@ -1,17 +1,21 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  TextInput,
   ActivityIndicator,
-  TouchableOpacity,
   StyleSheet,
-  ScrollView,
+  SectionList,
+  StatusBar,
+  Platform,
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import s from './styles';
-import { TodoItem, DoneButton } from '../../components';
+import {
+  TodoItem,
+  DoneButton,
+  AddTodoInput,
+  HideTodoButton,
+} from '../../components';
+import { colors } from '../../styles';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -24,41 +28,60 @@ const HomeScreenView = ({
   removeTodo,
   updateTodo,
 }) => {
-  const elementsArray = itemsTodo.map((item) => (
-    <TodoItem
-      key={item.id}
-      text={item.text}
-      completed={item.completed}
-      style={s.task}
-      onLongPress={() => removeTodo(item.id)}
-      id={item.id}
-      updateTodo={updateTodo}
-    />
-  ));
+  const sections = itemsTodo.reduce(
+    ([newTodos, doneTodos], item) => {
+      if (!item.completed) {
+        newTodos.data.push(item);
+      } else {
+        doneTodos.data.push(item);
+      }
+      return [newTodos, doneTodos];
+    },
+    [
+      {
+        headerSection: () => (
+          <AddTodoInput
+            placeholder="Add item"
+            onChangeText={setNewTaskInputText}
+            value={newTaskInputText}
+            onFocus={showBtnDone}
+            onBlur={hideBtnDone}
+            onSubmitEditing={addTodo}
+            ref={inputRef}
+          />
+        ),
+        data: [],
+      },
+      {
+        headerSection: () => <HideTodoButton />,
+        data: [],
+      },
+    ],
+  );
   return (
-    <ScrollView style={s.container}>
-      <View style={s.containerInput}>
-        <MaterialCommunityIcons
-          name="plus"
-          size={30}
-          style={s.icon}
+    <SectionList
+      renderScrollComponent={Platform.select({
+        ios: (props) => <KeyboardAwareScrollView {...props} />,
+      })}
+      renderSectionHeader={({ section }) =>
+        section.headerSection && section.headerSection()
+      }
+      style={s.container}
+      renderItem={({ item }) => (
+        <TodoItem
+          key={item.id}
+          text={item.text}
+          completed={item.completed}
+          style={s.task}
+          onLongPress={() => removeTodo(item.id)}
+          id={item.id}
+          updateTodo={updateTodo}
         />
-        <TextInput
-          placeholder="Add item"
-          style={s.textInput}
-          onChangeText={setNewTaskInputText}
-          value={newTaskInputText}
-          onFocus={showBtnDone}
-          onBlur={hideBtnDone}
-          onSubmitEditing={addTodo}
-          ref={inputRef}
-        />
-      </View>
-      {elementsArray}
-      <TouchableOpacity style={s.touchableBtn}>
-        <Text style={s.touchableBtnText}>HIDE CHECKED-OFF ITEMS</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      )}
+      sections={sections}
+      keyExtractor={(item) => item.id}
+      stickySectionHeadersEnabled
+    />
   );
 };
 
@@ -67,7 +90,7 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
   if (navigation.getParam('isLoading')) {
     headerRight = (
       <ActivityIndicator
-        size={30}
+        size="small"
         color="#B71C1C"
         style={s.activityIndicator}
       />
@@ -90,6 +113,9 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
       elevation: 0,
       borderBottomWidth: StyleSheet.hairlineWidth,
       borderColor: '#d6d7da',
+      backgroundColor: colors.white,
+      marginTop:
+        Platform.OS === 'ios' ? null : -StatusBar.currentHeight,
     },
   };
 };
