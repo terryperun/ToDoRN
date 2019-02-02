@@ -24,6 +24,7 @@ const AddTodoInput = React.forwardRef(
         value={value}
         onFocus={onFocus}
         onBlur={onBlur}
+        blurOnSubmit={false}
         onSubmitEditing={onSubmitEditing}
         ref={ref}
       />
