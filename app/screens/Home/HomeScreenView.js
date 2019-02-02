@@ -11,11 +11,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import s from './styles';
 import {
   TodoItem,
-  DoneButton,
   AddTodoInput,
   HideTodoButton,
 } from '../../components';
 import { colors } from '../../styles';
+import createTodoListHeader from './component/Headers/TodoListHeader';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -79,26 +79,9 @@ const HomeScreenView = ({
 };
 
 HomeScreenView.navigationOptions = ({ navigation }) => {
-  let headerRight;
-  if (navigation.getParam('isLoading')) {
-    headerRight = (
-      <ActivityIndicator
-        size="small"
-        color="#B71C1C"
-        style={s.activityIndicator}
-      />
-    );
-  } else if (navigation.getParam('showDone')) {
-    headerRight = (
-      <DoneButton
-        onPress={navigation.getParam('onDonePress')}
-        style={s.doneButton}
-      />
-    );
-  }
+  const customHeaderProps = createTodoListHeader(navigation);
+
   return {
-    title: 'My shopping list',
-    headerRight,
     headerTitleStyle: {
       elevation: 6,
     },
@@ -110,6 +93,7 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
       marginTop:
         Platform.OS === 'ios' ? null : -StatusBar.currentHeight,
     },
+    ...customHeaderProps,
   };
 };
 
