@@ -29,6 +29,7 @@ const HomeScreenView = ({
   updateTodo,
   sections,
   hideAllTodos,
+  selected,
 }) => {
   const listSections = [
     {
@@ -67,6 +68,7 @@ const HomeScreenView = ({
           completed={item.completed}
           style={s.task}
           id={item.id}
+          isSelected={selected[item.id]}
           updateTodo={updateTodo}
           removeTodo={removeTodo}
         />

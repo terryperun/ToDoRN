@@ -7,6 +7,7 @@ import {
   hoistStatics,
   lifecycle,
   withProps,
+  withStateHandlers,
 } from 'recompose';
 import { LayoutAnimation } from 'react-native';
 
@@ -20,6 +21,12 @@ const mapStateToProps = (state) => ({
   isLoading: state.todo.isLoading,
 });
 
+const createSelectedState = (arr, selectedId) =>
+  arr.reduce((acc, current) => {
+    acc[current.id] = current.id === selectedId;
+    return acc;
+  }, {});
+
 const enhance = compose(
   connect(
     mapStateToProps,
@@ -32,6 +39,26 @@ const enhance = compose(
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
+
+  withStateHandlers(
+    {
+      selected: {
+        // id: false,
+      },
+    },
+    {
+      setSelectedStatus: (state) => (id, value) => ({
+        selected: {
+          ...state.selected,
+          [id]: value,
+        },
+      }),
+      updateSelectedState: (_, props) => (id) => ({
+        selected: createSelectedState(props.itemsTodo, id),
+      }),
+    },
+  ),
+
   withProps((props) => ({
     sections: props.itemsTodo.reduce(
       (acc, item) => {
