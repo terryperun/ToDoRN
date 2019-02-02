@@ -27,37 +27,30 @@ const HomeScreenView = ({
   inputRef,
   removeTodo,
   updateTodo,
+  sections,
+  hideAllTodos,
 }) => {
-  const sections = itemsTodo.reduce(
-    ([newTodos, doneTodos], item) => {
-      if (!item.completed) {
-        newTodos.data.push(item);
-      } else {
-        doneTodos.data.push(item);
-      }
-      return [newTodos, doneTodos];
+  const listSections = [
+    {
+      headerSection: () => (
+        <AddTodoInput
+          placeholder="Add item"
+          onChangeText={setNewTaskInputText}
+          value={newTaskInputText}
+          onFocus={showBtnDone}
+          onBlur={hideBtnDone}
+          onSubmitEditing={addTodo}
+          ref={inputRef}
+        />
+      ),
+      data: sections.new,
     },
-    [
-      {
-        headerSection: () => (
-          <AddTodoInput
-            placeholder="Add item"
-            onChangeText={setNewTaskInputText}
-            value={newTaskInputText}
-            onFocus={showBtnDone}
-            onBlur={hideBtnDone}
-            onSubmitEditing={addTodo}
-            ref={inputRef}
-          />
-        ),
-        data: [],
-      },
-      {
-        headerSection: () => <HideTodoButton />,
-        data: [],
-      },
-    ],
-  );
+    {
+      headerSection: () => <HideTodoButton onPress={hideAllTodos} />,
+      data: sections.done,
+    },
+  ];
+
   return (
     <SectionList
       renderScrollComponent={Platform.select({
@@ -78,7 +71,7 @@ const HomeScreenView = ({
           updateTodo={updateTodo}
         />
       )}
-      sections={sections}
+      sections={listSections}
       keyExtractor={(item) => item.id}
       stickySectionHeadersEnabled
     />

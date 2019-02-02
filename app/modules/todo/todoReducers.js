@@ -94,6 +94,25 @@ const todoReducer = handleActions(
       ...state,
       error: action.payload,
     }),
+
+    [types.REMOVE_MANY_START]: (state, action) => ({
+      ...state,
+      isLoading: true,
+      error: null,
+      items: state.items.filter(
+        (todo) => !action.payload.ids.includes(todo.id),
+      ),
+    }),
+
+    [types.REMOVE_MANY_OK]: (state) => ({
+      ...state,
+      isLoading: false,
+    }),
+
+    [types.REMOVE_MANY_ERROR]: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
   },
   initialState,
 );

@@ -27,10 +27,24 @@ const enhance = compose(
       getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
       updateTodo: todoOperations.updateTodo,
+      removeMany: todoOperations.removeMany,
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
-  withProps({ inputRef: React.createRef() }),
+  withProps((props) => ({
+    sections: props.itemsTodo.reduce(
+      (acc, item) => {
+        if (!item.completed) {
+          acc.new.push(item);
+        } else {
+          acc.done.push(item);
+        }
+        return acc;
+      },
+      { done: [], new: [] },
+    ),
+    inputRef: React.createRef(),
+  })),
   lifecycle({
     componentDidMount() {
       this.props.getAll();
@@ -45,6 +59,10 @@ const enhance = compose(
       }
 
       props.inputRef.current.blur();
+    },
+    hideAllTodos: (props) => () => {
+      const ids = props.sections.done.map((i) => i.id);
+      props.removeMany(ids);
     },
   }),
   withHandlers({
