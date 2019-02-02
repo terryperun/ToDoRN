@@ -66,9 +66,9 @@ const HomeScreenView = ({
           text={item.text}
           completed={item.completed}
           style={s.task}
-          onLongPress={() => removeTodo(item.id)}
           id={item.id}
           updateTodo={updateTodo}
+          removeTodo={removeTodo}
         />
       )}
       sections={listSections}
