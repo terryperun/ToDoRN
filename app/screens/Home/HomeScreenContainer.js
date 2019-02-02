@@ -8,10 +8,11 @@ import {
   lifecycle,
   withProps,
 } from 'recompose';
+import { LayoutAnimation } from 'react-native';
+
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
 import { setParamOnChange } from '../../utils/enhancers';
-import { AlertService } from '../../services';
 
 const mapStateToProps = (state) => ({
   itemsTodo: state.todo.items,
@@ -54,6 +55,8 @@ const enhance = compose(
     addTodo: (props) => () => {
       const trimmed = props.newTaskInputText.trim();
       if (trimmed.length > 0) {
+        LayoutAnimation.easeInEaseOut();
+
         props.addTodo(trimmed);
         props.setNewTaskInputText('');
       }
@@ -63,6 +66,11 @@ const enhance = compose(
     hideAllTodos: (props) => () => {
       const ids = props.sections.done.map((i) => i.id);
       props.removeMany(ids);
+    },
+
+    removeTodo: (props) => (id) => {
+      LayoutAnimation.easeInEaseOut();
+      props.removeTodo(id);
     },
   }),
   withHandlers({
