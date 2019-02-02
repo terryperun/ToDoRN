@@ -60,9 +60,9 @@ const HomeScreenView = ({
   );
   return (
     <SectionList
-      // renderScrollComponent={(props) => (
-      //   <KeyboardAwareScrollView {...props} />
-      // )}
+      renderScrollComponent={Platform.select({
+        ios: (props) => <KeyboardAwareScrollView {...props} />,
+      })}
       renderSectionHeader={({ section }) =>
         section.headerSection && section.headerSection()
       }
