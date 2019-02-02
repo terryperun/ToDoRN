@@ -26,12 +26,17 @@ const enhance = compose(
   }),
   withHandlers({
     onPress: (props) => () => {
-      props.setIsEditing(true);
-
-      props.navigation.setParams({
-        showDone: true,
-        onDonePress: () => props.onSubmit(),
-      });
+      if (props.completed) {
+        props.updateTodo(props.id, {
+          completed: false,
+        });
+      } else {
+        props.setIsEditing(true);
+        props.navigation.setParams({
+          showDone: true,
+          onDonePress: () => props.onSubmit(),
+        });
+      }
     },
   }),
 );
