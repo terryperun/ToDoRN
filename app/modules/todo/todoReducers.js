@@ -52,14 +52,14 @@ const todoReducer = handleActions(
       ...state,
       isLoading: true,
       error: null,
-    }),
-
-    [types.REMOVE_TODO_OK]: (state, action) => ({
-      ...state,
-      isLoading: false,
       items: state.items.filter(
         (todo) => todo.id !== action.payload.id,
       ),
+    }),
+
+    [types.REMOVE_TODO_OK]: (state) => ({
+      ...state,
+      isLoading: false,
     }),
 
     [types.REMOVE_TODO_ERROR]: (state, action) => ({
