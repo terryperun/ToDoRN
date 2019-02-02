@@ -6,6 +6,8 @@ const routes = {
   [screens.Home]: HomeScreen,
 };
 
-const AppNavigator = StackNavigator(routes);
+const AppNavigator = StackNavigator(routes, {
+  headerLayoutPreset: 'center',
+});
 
 export default AppNavigator;
