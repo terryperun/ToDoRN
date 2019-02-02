@@ -26,7 +26,7 @@
       "supportsTablet": true
     },
     "androidStatusBar": {
-      "barStyle": "light-content"
+      "barStyle": "dark-content"
     }
   }
 }

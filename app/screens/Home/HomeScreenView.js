@@ -3,7 +3,10 @@ import {
   ActivityIndicator,
   StyleSheet,
   SectionList,
+  StatusBar,
+  Platform,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import s from './styles';
 import {
@@ -12,6 +15,7 @@ import {
   AddTodoInput,
   HideTodoButton,
 } from '../../components';
+import { colors } from '../../styles';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -56,6 +60,9 @@ const HomeScreenView = ({
   );
   return (
     <SectionList
+      // renderScrollComponent={(props) => (
+      //   <KeyboardAwareScrollView {...props} />
+      // )}
       renderSectionHeader={({ section }) =>
         section.headerSection && section.headerSection()
       }
@@ -106,6 +113,9 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
       elevation: 0,
       borderBottomWidth: StyleSheet.hairlineWidth,
       borderColor: '#d6d7da',
+      backgroundColor: colors.white,
+      marginTop:
+        Platform.OS === 'ios' ? null : -StatusBar.currentHeight,
     },
   };
 };
