@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
 import s from './styles';
+import { Touchable } from '../../components';
 
 const DoneButton = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress} style={s.container}>
+  <Touchable onPress={onPress} style={s.container}>
     <Text style={s.text}>Done</Text>
-  </TouchableOpacity>
+  </Touchable>
 );
 
 export default DoneButton;

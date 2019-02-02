@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.border,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     alignItems: 'center',
   },
 
@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
   },
 
   textTask: {
-    color: '#212121',
+    color: colors.text,
   },
 
   completedTask: {
     textDecorationLine: 'line-through',
-    color: '#9E9E9E',
+    color: colors.grayText,
   },
 
   containerInput: {
