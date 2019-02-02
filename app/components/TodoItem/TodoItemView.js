@@ -15,6 +15,7 @@ const TodoItemView = ({
   onPress,
   setTextItem,
   onLongPress,
+  onSubmitEditing,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -22,8 +23,9 @@ const TodoItemView = ({
         autoFocus
         onChangeText={(text) => setTextItem(text)}
         value={textItem}
-        onSubmitEditing={() => onSubmit()}
+        onSubmitEditing={onSubmitEditing}
         style={s.textInput}
+        blurOnSubmit={false}
       />
     </View>
   ) : (
