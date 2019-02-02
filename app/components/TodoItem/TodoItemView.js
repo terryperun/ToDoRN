@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import CheckBox from 'react-native-check-box';
+import Swipeout from 'react-native-swipeout';
 
 import { Touchable } from '../../components';
 import s from './styles';
 import { colors } from '../../styles';
 
 const TodoItemView = ({
+  id,
   isEditing,
   setIsEditing,
   textItem,
@@ -16,6 +18,7 @@ const TodoItemView = ({
   setTextItem,
   onLongPress,
   onSubmitEditing,
+  removeTodo,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -35,20 +38,34 @@ const TodoItemView = ({
       </Text>
     </View>
   );
+  const swipeSettings = {
+    autoClose: true,
+    right: [
+      {
+        onPress: () => removeTodo(id),
+        text: 'Delete',
+        backgroundColor: colors.danger,
+        color: colors.white,
+      },
+    ],
+  };
+
   return (
-    <Touchable onPress={onPress} onLongPress={onLongPress}>
-      <View style={s.container}>
-        <View style={s.checkBoxContainer}>
-          <CheckBox
-            style={s.CheckBox}
-            isChecked={completed}
-            onClick={() => onSubmit(!completed)}
-            checkBoxColor={colors.icon}
-          />
+    <Swipeout {...swipeSettings}>
+      <Touchable onPress={onPress}>
+        <View style={s.container}>
+          <View style={s.checkBoxContainer}>
+            <CheckBox
+              style={s.CheckBox}
+              isChecked={completed}
+              onClick={() => onSubmit(!completed)}
+              checkBoxColor={colors.icon}
+            />
+          </View>
+          {editingField}
         </View>
-        {editingField}
-      </View>
-    </Touchable>
+      </Touchable>
+    </Swipeout>
   );
 };
 

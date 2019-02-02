@@ -11,4 +11,5 @@ export default {
   // primary
   accent: '#27ae60',
   icon: '#757575',
+  danger: 'red',
 };

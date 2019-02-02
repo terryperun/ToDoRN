@@ -29,7 +29,7 @@ export const getAll = () => async (dispatch) => {
 };
 
 export const removeTodo = (id) => async (dispatch) => {
-  dispatch(actions.removeTodoStart());
+  dispatch(actions.removeTodoStart({ id }));
 
   try {
     await Api.remove(id);

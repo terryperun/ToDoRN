@@ -66,9 +66,6 @@ const enhance = compose(
     },
   }),
   withHandlers({
-    removeTodo: (props) => (id) => {
-      AlertService.deleteAlert(() => props.removeTodo(id));
-    },
     showBtnDone: (props) => () => {
       props.navigation.setParams({
         showDone: true,
