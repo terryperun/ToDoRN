@@ -51,3 +51,18 @@ export const updateTodo = (id, patch) => async (dispatch) => {
     dispatch(actions.updateTodoError({ message: error.message }));
   }
 };
+
+export const removeMany = (ids) => async (dispatch) => {
+  if (ids.length === 0) {
+    return;
+  }
+  dispatch(actions.removeManyStart({ ids }));
+
+  try {
+    await Api.removeMany(ids);
+
+    dispatch(actions.removeManyOk({ ids }));
+  } catch (error) {
+    dispatch(actions.removeManyError({ message: error.message }));
+  }
+};

@@ -20,3 +20,7 @@ export const removeTodoError = createAction(types.REMOVE_TODO_ERROR);
 export const updateTodoStart = createAction(types.UPDATE_TODO_START);
 export const updateTodoOk = createAction(types.UPDATE_TODO_OK);
 export const updateTodoError = createAction(types.UPDATE_TODO_ERROR);
+
+export const removeManyStart = createAction(types.REMOVE_MANY_START);
+export const removeManyOk = createAction(types.REMOVE_MANY_OK);
+export const removeManyError = createAction(types.REMOVE_MANY_ERROR);
