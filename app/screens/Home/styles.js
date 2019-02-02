@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
   },
   task: {},
   activityIndicator: {
-    paddingRight: 5,
+    paddingRight: 16,
   },
 
   doneButton: {
-    marginRight: 15,
+    marginRight: 16,
   },
 });
 export default styles;
