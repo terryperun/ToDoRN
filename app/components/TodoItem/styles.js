@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   containerInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
-    backgroundColor: colors.white,
   },
   textInput: {
     height: 60,
