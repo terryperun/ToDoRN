@@ -4,13 +4,11 @@ export default {
   green: 'green',
   gray: 'gray',
   transparent: 'transparent',
-  greenText: '#00AF4C',
   border: '#d6d7da',
-  // '#e8e8e8'
   background: '#f6f6f7',
   text: '#212121',
   grayText: '#9E9E9E',
   // primary
-  accent: '#00AF4C',
-  icon: '#00AF4C',
+  accent: '#27ae60',
+  icon: '#757575',
 };

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   buttonText: {
-    color: colors.greenText,
+    color: colors.accent,
   },
 });
 

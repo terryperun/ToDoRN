@@ -4,6 +4,7 @@ import CheckBox from 'react-native-check-box';
 
 import { Touchable } from '../../components';
 import s from './styles';
+import { colors } from '../../styles';
 
 const TodoItemView = ({
   isEditing,
@@ -40,7 +41,7 @@ const TodoItemView = ({
             style={s.CheckBox}
             isChecked={completed}
             onClick={() => onSubmit(!completed)}
-            checkBoxColor="#757575"
+            checkBoxColor={colors.icon}
           />
         </View>
         {editingField}
