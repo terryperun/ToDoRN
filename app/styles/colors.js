@@ -8,4 +8,5 @@ export default {
   border: '#d6d7da',
   // '#e8e8e8'
   icon: '#757575',
+  background: '#f6f6f7',
 };

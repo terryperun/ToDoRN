@@ -59,6 +59,7 @@ const HomeScreenView = ({
       renderSectionHeader={({ section }) =>
         section.headerSection && section.headerSection()
       }
+      style={s.container}
       renderItem={({ item }) => (
         <TodoItem
           key={item.id}
@@ -82,7 +83,7 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
   if (navigation.getParam('isLoading')) {
     headerRight = (
       <ActivityIndicator
-        size={30}
+        size="small"
         color="#B71C1C"
         style={s.activityIndicator}
       />
