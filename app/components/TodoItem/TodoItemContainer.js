@@ -14,14 +14,22 @@ const enhance = compose(
   withState('textItem', 'setTextItem', (props) => props.text),
   withHandlers({
     onSubmit: (props) => (value) => {
-      props.setIsEditing(false);
-      props.updateTodo(props.id, {
-        text: props.textItem,
-        completed: value,
-      });
-      props.navigation.setParams({
-        showDone: false,
-      });
+      if (props.textItem.trim().length > 0) {
+        props.setIsEditing(false);
+        props.updateTodo(props.id, {
+          text: props.textItem,
+          completed: value,
+        });
+        props.navigation.setParams({
+          showDone: false,
+        });
+      } else {
+        props.setIsEditing(false);
+        props.navigation.setParams({
+          showDone: false,
+        });
+        props.setTextItem(props.text);
+      }
     },
   }),
   withHandlers({
@@ -36,6 +44,11 @@ const enhance = compose(
           showDone: true,
           onDonePress: () => props.onSubmit(),
         });
+      }
+    },
+    onSubmitEditing: (props) => () => {
+      if (props.textItem.trim().length > 0) {
+        props.onSubmit();
       }
     },
   }),
