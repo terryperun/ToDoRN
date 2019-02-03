@@ -59,6 +59,10 @@ const enhance = compose(
         selected: createSelectedState(props.itemsTodo, id),
         selectedCount: 1,
       }),
+      resetSelectionState: () => () => ({
+        selected: {},
+        selectedCount: 0,
+      }),
     },
   ),
 
@@ -119,6 +123,10 @@ const enhance = compose(
     activateSelectionMode: (props) => (id) => {
       props.navigation.setParams({
         headerMode: 'action',
+        onCancel: () => {
+          props.resetSelectionState();
+          props.navigation.setParams({ headerMode: 'regular' });
+        },
       });
       props.updateSelectedState(id);
     },

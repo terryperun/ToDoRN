@@ -18,7 +18,7 @@ const createTodoListHeader = (navigation) => {
   } else if (navigation.getParam('showDone')) {
     headerRight = (
       <NavigationButton
-        // onPress={navigation.getParam('onDonePress')}
+        onPress={navigation.getParam('onDonePress')}
         text="Done"
         style={s.NavigationButton}
       />

@@ -9,7 +9,7 @@ const createListActionsHeader = (navigation) => {
     headerLeft: (
       <NavigationButton
         text="Cancel"
-        // onPress={navigation.getParam('onCancel')}
+        onPress={navigation.getParam('onCancel')}
       />
     ),
     headerLeftContainerStyle: {
