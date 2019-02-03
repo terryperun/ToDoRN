@@ -45,6 +45,7 @@ const enhance = compose(
       selected: {
         // id: false,
       },
+      selectedCount: 0,
     },
     {
       setSelectedStatus: (state) => (id, value) => ({
@@ -52,9 +53,11 @@ const enhance = compose(
           ...state.selected,
           [id]: value,
         },
+        selectedCount: state.selectedCount + (value ? +1 : -1),
       }),
       updateSelectedState: (_, props) => (id) => ({
         selected: createSelectedState(props.itemsTodo, id),
+        selectedCount: 1,
       }),
     },
   ),
@@ -113,8 +116,15 @@ const enhance = compose(
         showDone: false,
       });
     },
+    activateSelectionMode: (props) => (id) => {
+      props.navigation.setParams({
+        headerMode: 'action',
+      });
+      props.updateSelectedState(id);
+    },
   }),
   setParamOnChange('isLoading'),
+  setParamOnChange('selectedCount'),
 );
 
 export default hoistStatics(enhance)(HomeScreenView);

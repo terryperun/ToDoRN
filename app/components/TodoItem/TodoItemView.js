@@ -19,6 +19,9 @@ const TodoItemView = ({
   onLongPress,
   onSubmitEditing,
   removeTodo,
+  onActivateSelectionMode,
+  onSelect,
+  isSelected,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -52,8 +55,11 @@ const TodoItemView = ({
 
   return (
     <Swipeout {...swipeSettings}>
-      <Touchable onPress={onPress}>
-        <View style={s.container}>
+      <Touchable
+        onPress={onPress}
+        onLongPress={() => onActivateSelectionMode(id)}
+      >
+        <View style={[s.container, isSelected && s.selected]}>
           <View style={s.checkBoxContainer}>
             <CheckBox
               style={s.CheckBox}

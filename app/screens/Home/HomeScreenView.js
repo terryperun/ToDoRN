@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import { colors } from '../../styles';
 import createTodoListHeader from './component/Headers/TodoListHeader';
+import createListActionsHeader from './component/Headers/ListActionsHeader';
 
 const HomeScreenView = ({
   setNewTaskInputText,
@@ -30,6 +31,9 @@ const HomeScreenView = ({
   sections,
   hideAllTodos,
   selected,
+  updateSelectedState,
+  activateSelectionMode,
+  setSelectedStatus,
 }) => {
   const listSections = [
     {
@@ -71,6 +75,9 @@ const HomeScreenView = ({
           isSelected={selected[item.id]}
           updateTodo={updateTodo}
           removeTodo={removeTodo}
+          updateSelectedState={updateSelectedState}
+          onActivateSelectionMode={activateSelectionMode}
+          onSelect={setSelectedStatus}
         />
       )}
       sections={listSections}
@@ -80,8 +87,18 @@ const HomeScreenView = ({
   );
 };
 
+const getHeader = (navigation) => {
+  switch (navigation.getParam('headerMode')) {
+    case 'action':
+      return createListActionsHeader(navigation);
+    case 'regular':
+    default:
+      return createTodoListHeader(navigation);
+  }
+};
+
 HomeScreenView.navigationOptions = ({ navigation }) => {
-  const customHeaderProps = createTodoListHeader(navigation);
+  const customHeaderProps = getHeader(navigation);
 
   return {
     headerTitleStyle: {

@@ -40,7 +40,9 @@ const enhance = compose(
   }),
   withHandlers({
     onPress: (props) => () => {
-      if (props.completed) {
+      if (props.navigation.getParam('headerMode') === 'action') {
+        props.onSelect(props.id, !props.isSelected);
+      } else if (props.completed) {
         LayoutAnimation.easeInEaseOut();
         props.updateTodo(props.id, {
           completed: false,

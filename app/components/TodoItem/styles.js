@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
     height: 60,
     flex: 1,
   },
+
+  selected: {
+    backgroundColor: colors.gray,
+  },
 });
 
 export default styles;
