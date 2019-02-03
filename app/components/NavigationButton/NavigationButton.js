@@ -3,12 +3,12 @@ import { Text, View } from 'react-native';
 import s from './styles';
 import { Touchable } from '../../components';
 
-const DoneButton = ({ onPress }) => (
+const NavigationButton = ({ text, onPress }) => (
   <Touchable onPress={onPress}>
     <View style={s.container}>
-      <Text style={s.text}>Done</Text>
+      <Text style={s.text}>{text}</Text>
     </View>
   </Touchable>
 );
 
-export default DoneButton;
+export default NavigationButton;

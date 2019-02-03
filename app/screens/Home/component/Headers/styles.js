@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
 
-  doneButton: {
+  NavigationButton: {
     marginRight: 16,
   },
 });

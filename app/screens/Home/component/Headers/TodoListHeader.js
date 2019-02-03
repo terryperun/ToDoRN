@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import { DoneButton } from '../../../../components';
+import { NavigationButton } from '../../../../components';
 import { colors } from '../../../../styles';
 import s from './styles';
 
@@ -17,9 +17,10 @@ const createTodoListHeader = (navigation) => {
     );
   } else if (navigation.getParam('showDone')) {
     headerRight = (
-      <DoneButton
-        onPress={navigation.getParam('onDonePress')}
-        style={s.doneButton}
+      <NavigationButton
+        // onPress={navigation.getParam('onDonePress')}
+        text="Done"
+        style={s.NavigationButton}
       />
     );
   }

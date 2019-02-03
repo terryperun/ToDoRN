@@ -1,5 +1,5 @@
 import React from 'react';
-import { DoneButton } from '../../../../components';
+import { NavigationButton } from '../../../../components';
 
 const createListActionsHeader = (navigation) => {
   const selectedCount = navigation.getParam('selectedCount');
@@ -7,12 +7,14 @@ const createListActionsHeader = (navigation) => {
   return {
     title: `Selected: ${selectedCount}`,
     headerLeft: (
-      <DoneButton
-        onPress={() =>
-          navigation.setParams({ headerMode: 'regular' })
-        }
+      <NavigationButton
+        text="Cancel"
+        // onPress={navigation.getParam('onCancel')}
       />
     ),
+    headerLeftContainerStyle: {
+      marginLeft: 16,
+    },
   };
 };
 
