@@ -22,6 +22,7 @@ const TodoItemView = ({
   onActivateSelectionMode,
   onSelect,
   isSelected,
+  selectionMode,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -51,6 +52,7 @@ const TodoItemView = ({
         color: colors.white,
       },
     ],
+    disabled: selectionMode,
   };
 
   return (

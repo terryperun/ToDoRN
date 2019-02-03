@@ -80,6 +80,7 @@ const HomeScreenView = ({
           updateSelectedState={updateSelectedState}
           onActivateSelectionMode={activateSelectionMode}
           onSelect={setSelectedStatus}
+          selectionMode={selectionMode}
         />
       )}
       sections={listSections}
