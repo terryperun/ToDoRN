@@ -1,9 +1,10 @@
 import React from 'react';
 import { NavigationButton } from '../../../../components';
+import s from './styles';
+import ActionButton from '../../../../components/ActionButton/ActionButton';
 
 const createListActionsHeader = (navigation) => {
   const selectedCount = navigation.getParam('selectedCount');
-
   return {
     title: `Selected: ${selectedCount}`,
     headerLeft: (
@@ -12,6 +13,7 @@ const createListActionsHeader = (navigation) => {
         onPress={navigation.getParam('onCancel')}
       />
     ),
+    headerRight: <ActionButton text="Delete" />,
     headerLeftContainerStyle: {
       marginLeft: 16,
     },
