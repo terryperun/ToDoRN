@@ -22,7 +22,7 @@ const HomeScreenView = ({
   setNewTaskInputText,
   newTaskInputText,
   addTodo,
-  itemsTodo,
+  todoItems,
   showBtnDone,
   hideBtnDone,
   inputRef,

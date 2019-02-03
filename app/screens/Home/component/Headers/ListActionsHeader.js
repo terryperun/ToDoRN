@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationButton } from '../../../../components';
-import s from './styles';
+// import s from './styles';
 import ActionButton from '../../../../components/ActionButton/ActionButton';
 
 const createListActionsHeader = (navigation) => {

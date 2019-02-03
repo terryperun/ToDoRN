@@ -16,7 +16,7 @@ import { todoOperations } from '../../modules/todo';
 import { setParamOnChange } from '../../utils/enhancers';
 
 const mapStateToProps = (state) => ({
-  itemsTodo: state.todo.items,
+  todoItems: state.todo.items,
   stateItems: state,
   isLoading: state.todo.isLoading,
 });
@@ -56,7 +56,7 @@ const enhance = compose(
         selectedCount: state.selectedCount + (value ? +1 : -1),
       }),
       updateSelectedState: (_, props) => (id) => ({
-        selected: createSelectedState(props.itemsTodo, id),
+        selected: createSelectedState(props.todoItems, id),
         selectedCount: 1,
       }),
       resetSelectionState: () => () => ({
@@ -67,7 +67,7 @@ const enhance = compose(
   ),
 
   withProps((props) => ({
-    sections: props.itemsTodo.reduce(
+    sections: props.todoItems.reduce(
       (acc, item) => {
         if (!item.completed) {
           acc.new.push(item);
