@@ -39,6 +39,7 @@ const enhance = compose(
     },
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
+  withState('selectionMode', 'setSelectionMode', false),
 
   withStateHandlers(
     {
@@ -126,9 +127,11 @@ const enhance = compose(
         onCancel: () => {
           props.resetSelectionState();
           props.navigation.setParams({ headerMode: 'regular' });
+          props.setSelectionMode(false);
         },
       });
       props.updateSelectedState(id);
+      props.setSelectionMode(true);
     },
   }),
   setParamOnChange('isLoading'),

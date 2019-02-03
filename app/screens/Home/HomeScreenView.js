@@ -34,6 +34,7 @@ const HomeScreenView = ({
   updateSelectedState,
   activateSelectionMode,
   setSelectedStatus,
+  selectionMode,
 }) => {
   const listSections = [
     {
@@ -46,6 +47,7 @@ const HomeScreenView = ({
           onBlur={hideBtnDone}
           onSubmitEditing={addTodo}
           ref={inputRef}
+          editable={!selectionMode}
         />
       ),
       data: sections.new,

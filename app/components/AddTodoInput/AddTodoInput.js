@@ -12,6 +12,7 @@ const AddTodoInput = React.forwardRef(
       onFocus,
       onBlur,
       onSubmitEditing,
+      editable,
     },
     ref,
   ) => (
@@ -27,6 +28,7 @@ const AddTodoInput = React.forwardRef(
         blurOnSubmit={false}
         onSubmitEditing={onSubmitEditing}
         ref={ref}
+        editable={editable}
       />
     </View>
   ),
