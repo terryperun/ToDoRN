@@ -107,6 +107,17 @@ const enhance = compose(
       LayoutAnimation.easeInEaseOut();
       props.removeTodo(id);
     },
+    removeTodos: (props) => () => {
+      const keyItems = Object.keys(props.selected);
+      const ids = keyItems.reduce((acc, key) => {
+        const value = props.selected[key];
+        if (value) {
+          acc.push(key);
+        }
+        return acc;
+      }, []);
+      props.removeMany(ids);
+    },
   }),
   withHandlers({
     showBtnDone: (props) => () => {
@@ -130,6 +141,12 @@ const enhance = compose(
           props.resetSelectionState();
           props.navigation.setParams({ headerMode: 'regular' });
           props.setSelectionMode(false);
+        },
+        onDeleteItems: () => {
+          props.removeTodos();
+          props.setSelectionMode(false);
+          props.navigation.setParams({ headerMode: 'regular' });
+          props.resetSelectionState();
         },
       });
       props.updateSelectedState(id);
