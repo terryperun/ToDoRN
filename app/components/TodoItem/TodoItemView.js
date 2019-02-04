@@ -24,6 +24,7 @@ const TodoItemView = ({
   onSelect,
   isSelected,
   selectionMode,
+  onPressOut,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -34,6 +35,7 @@ const TodoItemView = ({
         onSubmitEditing={onSubmitEditing}
         style={s.textInput}
         blurOnSubmit={false}
+        onBlur={onPressOut}
       />
     </View>
   ) : (

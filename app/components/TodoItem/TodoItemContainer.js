@@ -55,6 +55,12 @@ const enhance = compose(
         });
       }
     },
+    onPressOut: (props) => () => {
+      props.navigation.setParams({
+        showDone: false,
+      });
+      props.setIsEditing(false);
+    },
     onSubmitEditing: (props) => () => {
       if (props.textItem.trim().length > 0) {
         props.onSubmit();
