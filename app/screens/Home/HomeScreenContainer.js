@@ -113,12 +113,14 @@ const enhance = compose(
       props.navigation.setParams({
         showDone: true,
         onDonePress: props.addTodo,
+        buttonText: 'Add',
       });
     },
 
     hideBtnDone: (props) => () => {
       props.navigation.setParams({
         showDone: false,
+        buttonText: null,
       });
     },
     activateSelectionMode: (props) => (id) => {

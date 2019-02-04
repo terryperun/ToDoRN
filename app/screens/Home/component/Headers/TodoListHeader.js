@@ -19,7 +19,7 @@ const createTodoListHeader = (navigation) => {
     headerRight = (
       <NavigationButton
         onPress={navigation.getParam('onDonePress')}
-        text="Done"
+        text={navigation.getParam('buttonText') || 'Save'}
         style={s.NavigationButton}
       />
     );
