@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   selected: {
-    backgroundColor: colors.gray,
+    backgroundColor: colors.lightGreen,
   },
 });
 

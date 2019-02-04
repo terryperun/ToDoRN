@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import Swipeout from 'react-native-swipeout';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { Touchable } from '../../components';
 import s from './styles';
@@ -54,7 +55,21 @@ const TodoItemView = ({
     ],
     disabled: selectionMode,
   };
-
+  const checkBox = isSelected ? (
+    <MaterialIcons
+      name="check-circle"
+      size={25}
+      style={s.CheckBox}
+      color={colors.accent}
+    />
+  ) : (
+    <CheckBox
+      style={s.CheckBox}
+      isChecked={completed}
+      onClick={() => onSubmit(!completed)}
+      checkBoxColor={colors.icon}
+    />
+  );
   return (
     <Swipeout {...swipeSettings}>
       <Touchable
@@ -62,14 +77,7 @@ const TodoItemView = ({
         onLongPress={() => onActivateSelectionMode(id)}
       >
         <View style={[s.container, isSelected && s.selected]}>
-          <View style={s.checkBoxContainer}>
-            <CheckBox
-              style={s.CheckBox}
-              isChecked={completed}
-              onClick={() => onSubmit(!completed)}
-              checkBoxColor={colors.icon}
-            />
-          </View>
+          <View style={s.checkBoxContainer}>{checkBox}</View>
           {editingField}
         </View>
       </Touchable>

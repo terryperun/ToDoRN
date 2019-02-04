@@ -12,4 +12,5 @@ export default {
   accent: '#27ae60',
   icon: '#757575',
   danger: 'red',
+  lightGreen: '#F1F8E9',
 };
