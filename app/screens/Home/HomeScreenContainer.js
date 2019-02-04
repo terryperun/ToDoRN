@@ -14,6 +14,7 @@ import { LayoutAnimation } from 'react-native';
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
 import { setParamOnChange } from '../../utils/enhancers';
+import { AlertService } from '../../services';
 
 const mapStateToProps = (state) => ({
   todoItems: state.todo.items,
@@ -100,7 +101,8 @@ const enhance = compose(
     },
     hideAllTodos: (props) => () => {
       const ids = props.sections.done.map((i) => i.id);
-      props.removeMany(ids);
+      LayoutAnimation.easeInEaseOut();
+      AlertService.deleteAlert(() => props.removeMany(ids));
     },
 
     removeTodo: (props) => (id) => {
@@ -116,6 +118,7 @@ const enhance = compose(
         }
         return acc;
       }, []);
+      LayoutAnimation.easeInEaseOut();
       props.removeMany(ids);
     },
   }),
