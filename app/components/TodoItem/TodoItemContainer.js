@@ -3,6 +3,7 @@ import {
   withState,
   hoistStatics,
   withHandlers,
+  onlyUpdateForKeys,
 } from 'recompose';
 import { withNavigation } from 'react-navigation';
 import { LayoutAnimation } from 'react-native';
@@ -10,6 +11,12 @@ import { LayoutAnimation } from 'react-native';
 import TodoItemView from './TodoItemView';
 
 const enhance = compose(
+  onlyUpdateForKeys([
+    'text',
+    'completed',
+    'isSelected',
+    'selectionMode',
+  ]),
   withNavigation,
   withState('isEditing', 'setIsEditing', false),
   withState('textItem', 'setTextItem', (props) => props.text),

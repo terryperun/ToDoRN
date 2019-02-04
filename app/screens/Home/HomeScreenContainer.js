@@ -8,6 +8,7 @@ import {
   lifecycle,
   withProps,
   withStateHandlers,
+  pure,
 } from 'recompose';
 import { LayoutAnimation } from 'react-native';
 
@@ -160,6 +161,7 @@ const enhance = compose(
   }),
   setParamOnChange('isLoading'),
   setParamOnChange('selectedCount'),
+  pure,
 );
 
 export default hoistStatics(enhance)(HomeScreenView);
