@@ -57,21 +57,35 @@ const TodoItemView = ({
     ],
     disabled: selectionMode,
   };
-  const checkBox = isSelected ? (
-    <MaterialIcons
-      name="check-circle"
-      size={25}
-      style={s.CheckBox}
-      color={colors.accent}
-    />
-  ) : (
-    <CheckBox
-      style={s.CheckBox}
-      isChecked={completed}
-      onClick={() => onSubmit(!completed)}
-      checkBoxColor={colors.icon}
-    />
-  );
+  let icon;
+  if (isSelected) {
+    icon = (
+      <MaterialIcons
+        name="check-circle"
+        size={24}
+        style={s.CheckBox}
+        color={colors.accent}
+      />
+    );
+  } else if (selectionMode) {
+    icon = (
+      <MaterialIcons
+        name="radio-button-unchecked"
+        size={24}
+        style={s.CheckBox}
+        color={colors.gray}
+      />
+    );
+  } else {
+    icon = (
+      <CheckBox
+        style={s.CheckBox}
+        isChecked={completed}
+        onClick={() => onSubmit(!completed)}
+        checkBoxColor={colors.icon}
+      />
+    );
+  }
   return (
     <Swipeout {...swipeSettings}>
       <Touchable
@@ -79,7 +93,7 @@ const TodoItemView = ({
         onLongPress={() => onActivateSelectionMode(id)}
       >
         <View style={[s.container, isSelected && s.selected]}>
-          <View style={s.checkBoxContainer}>{checkBox}</View>
+          <View style={s.checkBoxContainer}>{icon}</View>
           {editingField}
         </View>
       </Touchable>

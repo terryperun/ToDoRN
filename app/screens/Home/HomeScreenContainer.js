@@ -101,8 +101,10 @@ const enhance = compose(
     },
     hideAllTodos: (props) => () => {
       const ids = props.sections.done.map((i) => i.id);
-      LayoutAnimation.easeInEaseOut();
-      AlertService.deleteAlert(() => props.removeMany(ids));
+      AlertService.deleteAlert(() => {
+        LayoutAnimation.easeInEaseOut();
+        props.removeMany(ids);
+      });
     },
 
     removeTodo: (props) => (id) => {
