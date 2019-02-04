@@ -4,7 +4,7 @@ class AlertService {
   deleteAlert(remove) {
     Alert.alert(
       'Remove item?',
-      'This operations cannot be canceled',
+      'This operations cannot be undo',
       [
         {
           text: 'Remove',
