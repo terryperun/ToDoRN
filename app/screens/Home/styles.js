@@ -4,6 +4,7 @@ import { colors } from '../../styles';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
+    marginTop: -StyleSheet.hairlineWidth,
   },
   task: {},
   activityIndicator: {

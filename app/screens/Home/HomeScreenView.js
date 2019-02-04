@@ -109,7 +109,7 @@ HomeScreenView.navigationOptions = ({ navigation }) => {
     headerStyle: {
       elevation: 0,
       borderBottomWidth: StyleSheet.hairlineWidth,
-      borderColor: '#d6d7da',
+      borderBottomColor: colors.border,
       backgroundColor: colors.white,
       marginTop:
         Platform.OS === 'ios' ? null : -StatusBar.currentHeight,
