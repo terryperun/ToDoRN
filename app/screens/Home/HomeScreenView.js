@@ -69,7 +69,6 @@ const HomeScreenView = ({
       style={s.container}
       renderItem={({ item }) => (
         <TodoItem
-          key={item.id}
           text={item.text}
           completed={item.completed}
           style={s.task}

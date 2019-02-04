@@ -18,6 +18,10 @@ const style = StyleSheet.create({
   defaultText: {
     color: colors.accent,
   },
+
+  disabled: {
+    color: colors.gray,
+  },
 });
 
 export default style;

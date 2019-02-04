@@ -14,6 +14,7 @@ const createListActionsHeader = (navigation) => {
     ),
     headerRight: (
       <NavigationButton
+        disabled={selectedCount === 0}
         text="Delete"
         type="danger"
         onPress={navigation.getParam('onDeleteItems')}

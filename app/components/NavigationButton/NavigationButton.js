@@ -13,10 +13,14 @@ const getStyleByType = (type) => {
       return [s.text, s.defaultText];
   }
 };
-const NavigationButton = ({ text, onPress, type }) => (
-  <Touchable onPress={onPress}>
+const NavigationButton = ({
+  text, onPress, type, disabled,
+}) => (
+  <Touchable onPress={onPress} disabled={disabled}>
     <View style={s.container}>
-      <Text style={getStyleByType(type)}>{text}</Text>
+      <Text style={[getStyleByType(type), disabled && s.disabled]}>
+        {text}
+      </Text>
     </View>
   </Touchable>
 );
