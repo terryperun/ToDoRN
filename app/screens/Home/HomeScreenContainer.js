@@ -102,7 +102,7 @@ const enhance = compose(
     },
     hideAllTodos: (props) => () => {
       const ids = props.sections.done.map((i) => i.id);
-      AlertService.deleteAlert(() => {
+      AlertService.delete(() => {
         LayoutAnimation.easeInEaseOut();
         props.removeMany(ids);
       });
@@ -112,19 +112,23 @@ const enhance = compose(
       LayoutAnimation.easeInEaseOut();
       props.removeTodo(id);
     },
+
     removeTodos: (props) => () => {
-      const keyItems = Object.keys(props.selected);
-      const ids = keyItems.reduce((acc, key) => {
-        const value = props.selected[key];
-        if (value) {
-          acc.push(key);
-        }
-        return acc;
-      }, []);
+      const arr = Object.entries(props.selected).reduce(
+        (acc, [key, value]) => {
+          if (value) {
+            acc.push(key);
+          }
+          return acc;
+        },
+        [],
+      );
+
       LayoutAnimation.easeInEaseOut();
-      props.removeMany(ids);
+      props.removeMany(arr);
     },
   }),
+
   withHandlers({
     showBtnDone: (props) => () => {
       props.navigation.setParams({

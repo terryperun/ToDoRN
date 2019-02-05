@@ -62,7 +62,7 @@ const enhance = compose(
         });
       }
     },
-    onPressOut: (props) => () => {
+    dismissEditing: (props) => () => {
       props.navigation.setParams({
         showDone: false,
       });
