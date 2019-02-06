@@ -12,7 +12,7 @@ import s from './styles';
 import {
   TodoItem,
   AddTodoInput,
-  HideTodoButton,
+  RemoveTodoButton,
 } from '../../components';
 import { colors } from '../../styles';
 import createTodoListHeader from './component/Headers/TodoListHeader';
@@ -53,7 +53,10 @@ const HomeScreenView = ({
       data: sections.new,
     },
     {
-      headerSection: () => <HideTodoButton onPress={hideAllTodos} />,
+      headerSection: () =>
+        (sections.done.length > 0 ? (
+          <RemoveTodoButton onPress={hideAllTodos} />
+        ) : null),
       data: sections.done,
     },
   ];
