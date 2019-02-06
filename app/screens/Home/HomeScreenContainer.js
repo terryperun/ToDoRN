@@ -114,7 +114,7 @@ const enhance = compose(
     },
 
     removeTodos: (props) => () => {
-      const arr = Object.entries(props.selected).reduce(
+      const ids = Object.entries(props.selected).reduce(
         (acc, [key, value]) => {
           if (value) {
             acc.push(key);
@@ -125,7 +125,7 @@ const enhance = compose(
       );
 
       LayoutAnimation.easeInEaseOut();
-      props.removeMany(arr);
+      props.removeMany(ids);
     },
   }),
 
