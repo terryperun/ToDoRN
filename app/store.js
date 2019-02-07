@@ -9,6 +9,7 @@ import appReducer from './modules';
 const config = {
   key: 'root',
   storage,
+  whitelist: ['todo'],
 };
 
 const reducer = persistCombineReducers(config, appReducer);
@@ -19,5 +20,5 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
-
+// persistor.purge();
 export { store, persistor };
