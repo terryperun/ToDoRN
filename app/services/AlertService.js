@@ -1,10 +1,10 @@
 import { Alert } from 'react-native';
 
 class AlertService {
-  deleteAlert(remove) {
+  delete(remove) {
     Alert.alert(
       'Remove item?',
-      'This operations cannot be canceled',
+      'This operations cannot be undo',
       [
         {
           text: 'Remove',

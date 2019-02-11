@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import s from './styles';
 import { Touchable } from '../../components';
+import s from './styles';
 
-const DoneButton = ({ onPress }) => (
+const RemoveTodoButton = ({ onPress }) => (
   <Touchable onPress={onPress}>
     <View style={s.container}>
-      <Text style={s.text}>Done</Text>
+      <Text style={s.buttonText}>REMOVE CHECKED-OFF ITEMS</Text>
     </View>
   </Touchable>
 );
 
-export default DoneButton;
+export default RemoveTodoButton;

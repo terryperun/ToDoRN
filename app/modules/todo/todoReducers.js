@@ -1,4 +1,6 @@
 import { handleActions } from 'redux-actions';
+import { REHYDRATE, PURGE } from 'redux-persist/lib/constants';
+
 import types from './todoTypes';
 
 const initialState = {
@@ -9,6 +11,16 @@ const initialState = {
 
 const todoReducer = handleActions(
   {
+    [REHYDRATE]: (state, action) => ({
+      ...state,
+      isLoading: false,
+      items: action.payload.todo.items,
+    }),
+
+    [PURGE]: () => ({
+      ...initialState,
+    }),
+
     [types.ADD_TODO_START]: (state, action) => ({
       ...state,
       isLoading: true,

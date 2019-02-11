@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import Swipeout from 'react-native-swipeout';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { Touchable } from '../../components';
 import s from './styles';
@@ -19,6 +20,11 @@ const TodoItemView = ({
   onLongPress,
   onSubmitEditing,
   removeTodo,
+  onActivateSelectionMode,
+  onSelect,
+  isSelected,
+  selectionMode,
+  dismissEditing,
 }) => {
   const editingField = isEditing ? (
     <View style={s.containerInput}>
@@ -29,6 +35,7 @@ const TodoItemView = ({
         onSubmitEditing={onSubmitEditing}
         style={s.textInput}
         blurOnSubmit={false}
+        onBlur={dismissEditing}
       />
     </View>
   ) : (
@@ -48,20 +55,45 @@ const TodoItemView = ({
         color: colors.white,
       },
     ],
+    disabled: selectionMode,
   };
-
+  let icon;
+  if (isSelected) {
+    icon = (
+      <MaterialIcons
+        name="check-circle"
+        size={24}
+        style={s.CheckBox}
+        color={colors.accent}
+      />
+    );
+  } else if (selectionMode) {
+    icon = (
+      <MaterialIcons
+        name="radio-button-unchecked"
+        size={24}
+        style={s.CheckBox}
+        color={colors.gray}
+      />
+    );
+  } else {
+    icon = (
+      <CheckBox
+        style={s.CheckBox}
+        isChecked={completed}
+        onClick={() => onSubmit(!completed)}
+        checkBoxColor={colors.icon}
+      />
+    );
+  }
   return (
     <Swipeout {...swipeSettings}>
-      <Touchable onPress={onPress}>
-        <View style={s.container}>
-          <View style={s.checkBoxContainer}>
-            <CheckBox
-              style={s.CheckBox}
-              isChecked={completed}
-              onClick={() => onSubmit(!completed)}
-              checkBoxColor={colors.icon}
-            />
-          </View>
+      <Touchable
+        onPress={onPress}
+        onLongPress={() => onActivateSelectionMode(id)}
+      >
+        <View style={[s.container, isSelected && s.selected]}>
+          <View style={s.checkBoxContainer}>{icon}</View>
           {editingField}
         </View>
       </Touchable>

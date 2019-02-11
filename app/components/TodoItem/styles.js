@@ -36,10 +36,15 @@ const styles = StyleSheet.create({
   containerInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
+    flex: 1,
   },
   textInput: {
     height: 60,
     flex: 1,
+  },
+
+  selected: {
+    backgroundColor: colors.lightGreen,
   },
 });
 

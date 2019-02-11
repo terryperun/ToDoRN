@@ -1,12 +1,24 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'remote-redux-devtools';
+import { persistStore, persistCombineReducers } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import appReducer from './modules';
 
+const config = {
+  key: 'root',
+  storage,
+  whitelist: ['todo'],
+};
+
+const reducer = persistCombineReducers(config, appReducer);
+
 const store = createStore(
-  appReducer,
+  reducer,
   composeWithDevTools(applyMiddleware(thunk)),
 );
 
-export default store;
+const persistor = persistStore(store);
+// persistor.purge();
+export { store, persistor };

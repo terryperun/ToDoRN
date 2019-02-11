@@ -3,12 +3,24 @@ import { colors } from '../../styles';
 
 const style = StyleSheet.create({
   container: {
-    marginRight: 16,
+    marginHorizontal: 8,
   },
   text: {
     fontWeight: '400',
     fontSize: 16,
+    paddingHorizontal: 8,
+  },
+
+  dangerText: {
+    color: colors.danger,
+  },
+
+  defaultText: {
     color: colors.accent,
+  },
+
+  disabled: {
+    color: colors.gray,
   },
 });
 

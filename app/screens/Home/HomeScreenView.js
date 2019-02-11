@@ -11,17 +11,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import s from './styles';
 import {
   TodoItem,
-  DoneButton,
   AddTodoInput,
-  HideTodoButton,
+  RemoveTodoButton,
 } from '../../components';
 import { colors } from '../../styles';
+import createTodoListHeader from './component/Headers/TodoListHeader';
+import createListActionsHeader from './component/Headers/ListActionsHeader';
 
 const HomeScreenView = ({
   setNewTaskInputText,
   newTaskInputText,
   addTodo,
-  itemsTodo,
+  todoItems,
   showBtnDone,
   hideBtnDone,
   inputRef,
@@ -29,6 +30,11 @@ const HomeScreenView = ({
   updateTodo,
   sections,
   hideAllTodos,
+  selected,
+  updateSelectedState,
+  activateSelectionMode,
+  setSelectedStatus,
+  selectionMode,
 }) => {
   const listSections = [
     {
@@ -41,12 +47,16 @@ const HomeScreenView = ({
           onBlur={hideBtnDone}
           onSubmitEditing={addTodo}
           ref={inputRef}
+          editable={!selectionMode}
         />
       ),
       data: sections.new,
     },
     {
-      headerSection: () => <HideTodoButton onPress={hideAllTodos} />,
+      headerSection: () =>
+        (sections.done.length > 0 ? (
+          <RemoveTodoButton onPress={hideAllTodos} />
+        ) : null),
       data: sections.done,
     },
   ];
@@ -62,13 +72,17 @@ const HomeScreenView = ({
       style={s.container}
       renderItem={({ item }) => (
         <TodoItem
-          key={item.id}
           text={item.text}
           completed={item.completed}
           style={s.task}
           id={item.id}
+          isSelected={selected[item.id]}
           updateTodo={updateTodo}
           removeTodo={removeTodo}
+          updateSelectedState={updateSelectedState}
+          onActivateSelectionMode={activateSelectionMode}
+          onSelect={setSelectedStatus}
+          selectionMode={selectionMode}
         />
       )}
       sections={listSections}
@@ -78,38 +92,32 @@ const HomeScreenView = ({
   );
 };
 
-HomeScreenView.navigationOptions = ({ navigation }) => {
-  let headerRight;
-  if (navigation.getParam('isLoading')) {
-    headerRight = (
-      <ActivityIndicator
-        size="small"
-        color="#B71C1C"
-        style={s.activityIndicator}
-      />
-    );
-  } else if (navigation.getParam('showDone')) {
-    headerRight = (
-      <DoneButton
-        onPress={navigation.getParam('onDonePress')}
-        style={s.doneButton}
-      />
-    );
+const getHeader = (navigation) => {
+  switch (navigation.getParam('headerMode')) {
+    case 'action':
+      return createListActionsHeader(navigation);
+    case 'regular':
+    default:
+      return createTodoListHeader(navigation);
   }
+};
+
+HomeScreenView.navigationOptions = ({ navigation }) => {
+  const customHeaderProps = getHeader(navigation);
+
   return {
-    title: 'My shopping list',
-    headerRight,
     headerTitleStyle: {
       elevation: 6,
     },
     headerStyle: {
       elevation: 0,
       borderBottomWidth: StyleSheet.hairlineWidth,
-      borderColor: '#d6d7da',
+      borderBottomColor: colors.border,
       backgroundColor: colors.white,
       marginTop:
         Platform.OS === 'ios' ? null : -StatusBar.currentHeight,
     },
+    ...customHeaderProps,
   };
 };
 
