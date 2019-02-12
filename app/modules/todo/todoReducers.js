@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions';
 import { REHYDRATE, PURGE } from 'redux-persist/lib/constants';
+import R from 'ramda';
 
 import types from './todoTypes';
 
@@ -14,7 +15,11 @@ const todoReducer = handleActions(
     [REHYDRATE]: (state, action) => ({
       ...state,
       isLoading: false,
-      items: action.payload.todo.items,
+      items: R.pathOr(
+        state.items,
+        ['payload', 'todo', 'items'],
+        action,
+      ),
     }),
 
     [PURGE]: () => ({
