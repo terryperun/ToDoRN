@@ -34,6 +34,10 @@ const randomDelay = () =>
 const getId = (endpoint) => endpoint.split('/')[1];
 
 const handleRequest = async (endpoint, options, cache) => {
+  if (options.body) {
+    options.body = JSON.parse(options.body); // eslint-disable-line no-param-reassign
+  }
+
   switch (options.method) {
     case methods.get: {
       return cache;
@@ -106,6 +110,10 @@ const handleRequest = async (endpoint, options, cache) => {
 const fetchData = async (endpoint, options = {}) => {
   if (!options.method) {
     options.method = methods.get; // eslint-disable-line no-param-reassign
+  }
+
+  if (options.body) {
+    options.body = JSON.stringify(options.body); // eslint-disable-line no-param-reassign
   }
 
   // getting cached data from store
