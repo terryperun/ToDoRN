@@ -25,11 +25,17 @@ const mapStateToProps = (state) => ({
   doneTodoItems: state.todo.doneItems,
 });
 
-const createSelectedState = (arr, selectedId) =>
-  arr.reduce((acc, current) => {
+const createSelectedState = (newArr, doneArr, selectedId) => {
+  const newTodo = newArr.reduce((acc, current) => {
     acc[current.id] = current.id === selectedId;
     return acc;
   }, {});
+  const doneTodo = doneArr.reduce((acc, current) => {
+    acc[current.id] = current.id === selectedId;
+    return acc;
+  }, {});
+  return Object.assign({}, newTodo, doneTodo);
+};
 
 const enhance = compose(
   connect(
@@ -61,7 +67,11 @@ const enhance = compose(
         selectedCount: state.selectedCount + (value ? +1 : -1),
       }),
       updateSelectedState: (_, props) => (id) => ({
-        selected: createSelectedState(props.todoItems, id),
+        selected: createSelectedState(
+          props.newTodoItems,
+          props.doneTodoItems,
+          id,
+        ),
         selectedCount: 1,
       }),
       resetSelectionState: () => () => ({
@@ -72,17 +82,6 @@ const enhance = compose(
   ),
 
   withProps((props) => ({
-    // sections: props.todoItems.reduce(
-    //   (acc, item) => {
-    //     if (!item.completed) {
-    //       acc.new.push(item);
-    //     } else {
-    //       acc.done.push(item);
-    //     }
-    //     return acc;
-    //   },
-    //   { done: [], new: [] },
-    // ),
     inputRef: React.createRef(),
   })),
   lifecycle({
@@ -90,6 +89,7 @@ const enhance = compose(
       this.props.getAll();
     },
   }),
+
   withHandlers({
     addTodo: (props) => () => {
       const trimmed = props.newTaskInputText.trim();
@@ -101,6 +101,7 @@ const enhance = compose(
       }
       props.inputRef.current.blur();
     },
+
     hideAllTodos: (props) => () => {
       const ids = props.doneTodoItems.map((i) => i.id);
       AlertService.delete(() => {
