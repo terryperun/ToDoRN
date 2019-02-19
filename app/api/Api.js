@@ -107,7 +107,52 @@ const handleRequest = async (endpoint, options, cache) => {
   }
 };
 
+export class AbortError extends Error {
+  constructor() {
+    super();
+    this.name = 'AbortError';
+    this.message = 'Request was aborted.';
+    this.stack = new Error().stack;
+  }
+}
+
+class EventEmitter {
+  constructor() {
+    this.listener = null;
+  }
+
+  send() {
+    this.listener();
+  }
+
+  subscribe(cb) {
+    this.listener = cb;
+  }
+}
+
+export function createAbortSignal() {
+  const abortEvent = new EventEmitter();
+
+  function abort() {
+    abortEvent.send();
+  }
+
+  function signal() {
+    abortEvent.subscribe(() => {
+      throw new AbortError();
+    });
+  }
+
+  signal.abort = abort;
+
+  return signal;
+}
+
 const fetchData = async (endpoint, options = {}) => {
+  if (options.signal) {
+    options.signal();
+  }
+
   if (!options.method) {
     options.method = methods.get; // eslint-disable-line no-param-reassign
   }
@@ -127,24 +172,32 @@ const fetchData = async (endpoint, options = {}) => {
 };
 
 const TodoApi = {
-  add(body) {
-    return fetchData('todos', { method: 'post', body });
+  add(body, { signal } = {}) {
+    return fetchData('todos', { method: 'post', body, signal });
   },
 
-  remove(id) {
-    return fetchData(`todos/${id}`, { method: 'delete' });
+  remove(id, { signal } = {}) {
+    return fetchData(`todos/${id}`, { method: 'delete', signal });
   },
 
-  removeMany(ids) {
-    return fetchData('todos/remove', { method: 'post', body: ids });
+  removeMany(ids, { signal } = {}) {
+    return fetchData('todos/remove', {
+      method: 'post',
+      body: ids,
+      signal,
+    });
   },
 
-  getAll() {
-    return fetchData('todos');
+  getAll({ signal } = {}) {
+    return fetchData('todos', { signal });
   },
 
-  update(id, body) {
-    return fetchData(`todos/${id}`, { method: 'patch', body });
+  update(id, body, { signal } = {}) {
+    return fetchData(`todos/${id}`, {
+      method: 'patch',
+      body,
+      signal,
+    });
   },
 };
 
