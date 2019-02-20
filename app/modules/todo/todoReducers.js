@@ -36,7 +36,7 @@ const todoReducer = handleActions(
       ...state,
       isLoading: true,
       error: null,
-      newItems: [action.payload, ...state.newItems],
+      newItems: [...state.newItems, action.payload],
     }),
     [types.ADD_TODO_OK]: (state, action) => ({
       ...state,
@@ -101,6 +101,11 @@ const todoReducer = handleActions(
       const indexInNew = newItems.findIndex((i) => i.id === id);
       const indexInDone = doneItems.findIndex((i) => i.id === id);
       let shouldMoveToDone;
+      const compare = (a, b) => {
+        if (a.createdAt < b.createdAt) return -1;
+        if (a.createdAt > b.createdAt) return 1;
+        return 0;
+      };
 
       if (indexInNew > -1) {
         let element = newItems[indexInNew];
@@ -113,7 +118,6 @@ const todoReducer = handleActions(
 
         if (shouldMoveToDone) {
           newItems = newItems.filter((i) => i.id !== id);
-          // doneItems.push(element);
           doneItems.unshift(element);
         } else {
           newItems[indexInNew] = element;
@@ -124,6 +128,8 @@ const todoReducer = handleActions(
 
         doneItems = doneItems.filter((i) => i.id !== id);
         newItems.push(element);
+
+        newItems.sort(compare);
       }
 
       return {

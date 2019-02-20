@@ -4,6 +4,7 @@ import {
   StatusBar,
   View,
   UIManager,
+  AsyncStorage,
 } from 'react-native';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
@@ -18,6 +19,7 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 }
 
 // persistor.purge();
+// AsyncStorage.clear();
 
 const App = () => (
   <View style={globalStyles.flex}>
