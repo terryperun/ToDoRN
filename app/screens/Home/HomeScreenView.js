@@ -28,13 +28,14 @@ const HomeScreenView = ({
   inputRef,
   removeTodo,
   updateTodo,
-  sections,
   hideAllTodos,
   selected,
   updateSelectedState,
   activateSelectionMode,
   setSelectedStatus,
   selectionMode,
+  newTodoItems,
+  doneTodoItems,
 }) => {
   const listSections = [
     {
@@ -50,14 +51,16 @@ const HomeScreenView = ({
           editable={!selectionMode}
         />
       ),
-      data: sections.new,
+      // data: sections.new,
+      data: newTodoItems,
     },
     {
       headerSection: () =>
-        (sections.done.length > 0 ? (
+        (doneTodoItems.length > 0 ? (
           <RemoveTodoButton onPress={hideAllTodos} />
         ) : null),
-      data: sections.done,
+      // data: sections.done,
+      data: doneTodoItems,
     },
   ];
 
