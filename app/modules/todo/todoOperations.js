@@ -1,5 +1,5 @@
 import * as actions from './todoActions';
-import Api, { createAbortSignal, AbortError } from '../../api/Api';
+import Api from '../../api/Api';
 import { createTask } from '../../utils/creators';
 
 export const addTodo = (text) => async (dispatch) => {
@@ -40,36 +40,15 @@ export const removeTodo = (id) => async (dispatch) => {
   }
 };
 
-let pendingUpdates = [];
-
 export const updateTodo = (id, patch) => async (dispatch) => {
-  // check it there is a pending request already
-  const pendingUpdate = pendingUpdates.find((i) => i.id === id);
-
-  if (pendingUpdate) {
-    // abort that request if exist
-    pendingUpdate.signal.abort();
-  }
-
-  // create abort signal to identify request and abort it in the future
-  const signal = createAbortSignal();
-
-  // add new pending request
-  pendingUpdates.push({ id, patch, signal });
-
   dispatch(actions.updateTodoStart({ id, patch }));
+
   try {
-    const updatedItem = await Api.update(id, patch, { signal });
-    pendingUpdates = pendingUpdates.filter((i) => i.id !== id);
+    const updatedItem = await Api.update(id, patch);
 
     dispatch(actions.updateTodoOk({ id, updatedItem }));
   } catch (error) {
-    // check if the error is abort error (because it throws it under the hood on abort)
-    if (error instanceof AbortError) {
-      // TODO: rollback item state
-    } else {
-      dispatch(actions.updateTodoError({ message: error.message }));
-    }
+    dispatch(actions.updateTodoError({ message: error.message }));
   }
 };
 

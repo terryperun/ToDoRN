@@ -34,10 +34,6 @@ const randomDelay = () =>
 const getId = (endpoint) => endpoint.split('/')[1];
 
 const handleRequest = async (endpoint, options, cache) => {
-  if (options.body) {
-    options.body = JSON.parse(options.body); // eslint-disable-line no-param-reassign
-  }
-
   switch (options.method) {
     case methods.get: {
       return cache;
@@ -107,58 +103,9 @@ const handleRequest = async (endpoint, options, cache) => {
   }
 };
 
-export class AbortError extends Error {
-  constructor() {
-    super();
-    this.name = 'AbortError';
-    this.message = 'Request was aborted.';
-    this.stack = new Error().stack;
-  }
-}
-
-class EventEmitter {
-  constructor() {
-    this.listener = null;
-  }
-
-  send() {
-    this.listener();
-  }
-
-  subscribe(cb) {
-    this.listener = cb;
-  }
-}
-
-export function createAbortSignal() {
-  const abortEvent = new EventEmitter();
-
-  function abort() {
-    abortEvent.send();
-  }
-
-  function signal() {
-    abortEvent.subscribe(() => {
-      throw new AbortError();
-    });
-  }
-
-  signal.abort = abort;
-
-  return signal;
-}
-
 const fetchData = async (endpoint, options = {}) => {
-  if (options.signal) {
-    options.signal();
-  }
-
   if (!options.method) {
     options.method = methods.get; // eslint-disable-line no-param-reassign
-  }
-
-  if (options.body) {
-    options.body = JSON.stringify(options.body); // eslint-disable-line no-param-reassign
   }
 
   // getting cached data from store
@@ -172,32 +119,24 @@ const fetchData = async (endpoint, options = {}) => {
 };
 
 const TodoApi = {
-  add(body, { signal } = {}) {
-    return fetchData('todos', { method: 'post', body, signal });
+  add(body) {
+    return fetchData('todos', { method: 'post', body });
   },
 
-  remove(id, { signal } = {}) {
-    return fetchData(`todos/${id}`, { method: 'delete', signal });
+  remove(id) {
+    return fetchData(`todos/${id}`, { method: 'delete' });
   },
 
-  removeMany(ids, { signal } = {}) {
-    return fetchData('todos/remove', {
-      method: 'post',
-      body: ids,
-      signal,
-    });
+  removeMany(ids) {
+    return fetchData('todos/remove', { method: 'post', body: ids });
   },
 
-  getAll({ signal } = {}) {
-    return fetchData('todos', { signal });
+  getAll() {
+    return fetchData('todos');
   },
 
-  update(id, body, { signal } = {}) {
-    return fetchData(`todos/${id}`, {
-      method: 'patch',
-      body,
-      signal,
-    });
+  update(id, body) {
+    return fetchData(`todos/${id}`, { method: 'patch', body });
   },
 };
 
