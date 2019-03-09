@@ -7,6 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { observer } from 'mobx-react/custom';
 
 import s from './styles';
 import {
@@ -18,79 +19,81 @@ import { colors } from '../../styles';
 import createTodoListHeader from './component/Headers/TodoListHeader';
 import createListActionsHeader from './component/Headers/ListActionsHeader';
 
-const HomeScreenView = ({
-  setNewTaskInputText,
-  newTaskInputText,
-  addTodo,
-  todoItems,
-  showBtnDone,
-  hideBtnDone,
-  inputRef,
-  removeTodo,
-  updateTodo,
-  sections,
-  hideAllTodos,
-  selected,
-  updateSelectedState,
-  activateSelectionMode,
-  setSelectedStatus,
-  selectionMode,
-}) => {
-  const listSections = [
-    {
-      headerSection: () => (
-        <AddTodoInput
-          placeholder="Add item"
-          onChangeText={setNewTaskInputText}
-          value={newTaskInputText}
-          onFocus={showBtnDone}
-          onBlur={hideBtnDone}
-          onSubmitEditing={addTodo}
-          ref={inputRef}
-          editable={!selectionMode}
-        />
-      ),
-      data: sections.new,
-    },
-    {
-      headerSection: () =>
-        (sections.done.length > 0 ? (
-          <RemoveTodoButton onPress={hideAllTodos} />
-        ) : null),
-      data: sections.done,
-    },
-  ];
+const HomeScreenView = observer(
+  ({
+    setNewTaskInputText,
+    newTaskInputText,
+    addTodo,
+    todoItems,
+    showBtnDone,
+    hideBtnDone,
+    inputRef,
+    removeTodo,
+    updateTodo,
+    sections,
+    hideAllTodos,
+    selected,
+    updateSelectedState,
+    activateSelectionMode,
+    setSelectedStatus,
+    selectionMode,
+  }) => {
+    const listSections = [
+      {
+        headerSection: () => (
+          <AddTodoInput
+            placeholder="Add item"
+            onChangeText={setNewTaskInputText}
+            value={newTaskInputText}
+            onFocus={showBtnDone}
+            onBlur={hideBtnDone}
+            onSubmitEditing={addTodo}
+            ref={inputRef}
+            editable={!selectionMode}
+          />
+        ),
+        data: sections.new,
+      },
+      {
+        headerSection: () =>
+          (sections.done.length > 0 ? (
+            <RemoveTodoButton onPress={hideAllTodos} />
+          ) : null),
+        data: sections.done,
+      },
+    ];
 
-  return (
-    <SectionList
-      renderScrollComponent={Platform.select({
-        ios: (props) => <KeyboardAwareScrollView {...props} />,
-      })}
-      renderSectionHeader={({ section }) =>
-        section.headerSection && section.headerSection()
-      }
-      style={s.container}
-      renderItem={({ item }) => (
-        <TodoItem
-          text={item.text}
-          completed={item.completed}
-          style={s.task}
-          id={item.id}
-          isSelected={selected[item.id]}
-          updateTodo={updateTodo}
-          removeTodo={removeTodo}
-          updateSelectedState={updateSelectedState}
-          onActivateSelectionMode={activateSelectionMode}
-          onSelect={setSelectedStatus}
-          selectionMode={selectionMode}
-        />
-      )}
-      sections={listSections}
-      keyExtractor={(item) => item.id}
-      stickySectionHeadersEnabled
-    />
-  );
-};
+    return (
+      <SectionList
+        renderScrollComponent={Platform.select({
+          ios: (props) => <KeyboardAwareScrollView {...props} />,
+        })}
+        renderSectionHeader={({ section }) =>
+          section.headerSection && section.headerSection()
+        }
+        style={s.container}
+        renderItem={({ item }) => (
+          <TodoItem
+            text={item.text}
+            completed={item.completed}
+            style={s.task}
+            id={item.id}
+            isSelected={selected[item.id]}
+            updateTodo={updateTodo}
+            removeTodo={removeTodo}
+            updateSelectedState={updateSelectedState}
+            onActivateSelectionMode={activateSelectionMode}
+            onSelect={setSelectedStatus}
+            selectionMode={selectionMode}
+          />
+        )}
+        sections={listSections}
+        keyExtractor={(item) => item.id}
+        stickySectionHeadersEnabled
+      />
+    );
+  },
+);
 
 const getHeader = (navigation) => {
   switch (navigation.getParam('headerMode')) {

@@ -11,14 +11,14 @@ import {
   pure,
 } from 'recompose';
 import { LayoutAnimation } from 'react-native';
-
+import { inject, observer } from 'mobx-react/custom';
 import HomeScreenView from './HomeScreenView';
 import { todoOperations } from '../../modules/todo';
 import { setParamOnChange } from '../../utils/enhancers';
 import { AlertService } from '../../services';
 
 const mapStateToProps = (state) => ({
-  todoItems: state.todo.items,
+  // todoItems: state.todo.items,
   stateItems: state,
   isLoading: state.todo.isLoading,
 });
@@ -30,11 +30,16 @@ const createSelectedState = (arr, selectedId) =>
   }, {});
 
 const enhance = compose(
+  inject(({ todo }) => ({
+    todoItems: todo.list,
+    getAll: todo.getAll,
+  })),
+  observer,
   connect(
     mapStateToProps,
     {
       addTodo: todoOperations.addTodo,
-      getAll: todoOperations.getAll,
+      // getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
       updateTodo: todoOperations.updateTodo,
       removeMany: todoOperations.removeMany,
@@ -85,7 +90,7 @@ const enhance = compose(
   })),
   lifecycle({
     componentDidMount() {
-      this.props.getAll();
+      this.props.getAll.run();
     },
   }),
   withHandlers({

@@ -1,7 +1,10 @@
 import { types } from 'mobx-state-tree';
+import { TodoCollectionStore } from './TodoStore';
 
 const EntitiesStore = types
-  .model('EntitiesStore', {})
+  .model('EntitiesStore', {
+    todo: types.optional(TodoCollectionStore, {}),
+  })
 
   .actions((store) => ({
     merge(normalizedEntities) {
