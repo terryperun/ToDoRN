@@ -20,7 +20,7 @@ import { AlertService } from '../../services';
 const mapStateToProps = (state) => ({
   // todoItems: state.todo.items,
   stateItems: state,
-  isLoading: state.todo.isLoading,
+  // isLoading: state.todo.isLoading,
 });
 
 const createSelectedState = (arr, selectedId) =>
@@ -33,6 +33,7 @@ const enhance = compose(
   inject(({ todo }) => ({
     todoItems: todo.list,
     getAll: todo.getAll,
+    hasNetworkActivity: todo.hasNetworkActivity,
   })),
   observer,
   connect(
@@ -168,7 +169,7 @@ const enhance = compose(
       props.setSelectionMode(true);
     },
   }),
-  setParamOnChange('isLoading'),
+  setParamOnChange('hasNetworkActivity'),
   setParamOnChange('selectedCount'),
   pure,
 );

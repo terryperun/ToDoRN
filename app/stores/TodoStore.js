@@ -25,6 +25,10 @@ export const TodoStore = types
     get list() {
       return store.items.slice();
     },
+
+    get hasNetworkActivity() {
+      return store.getAll.inProgress;
+    },
   }))
 
   .actions((store) => ({
