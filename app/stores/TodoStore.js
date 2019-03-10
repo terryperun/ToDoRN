@@ -11,6 +11,8 @@ export const Todo = types
     updatedAt: types.number,
     createdAt: types.number,
 
+    isSelected: false,
+
     toggleCompleted: createFlow(toggleCompleted),
     remove: createFlow(remove),
   })
@@ -18,6 +20,14 @@ export const Todo = types
   .actions((store) => ({
     setCompleted(value) {
       store.completed = value;
+    },
+
+    toggleSelection() {
+      store.isSelected = !store.isSelected;
+    },
+
+    setSelection(value) {
+      store.isSelected = value;
     },
   }));
 
@@ -99,6 +109,22 @@ export const TodoStore = types
         },
         { done: [], new: [] },
       );
+    },
+
+    get selectedCount() {
+      return store.list.asArray.reduce((acc, current) => {
+        if (current.isSelected) {
+          acc += 1;
+        }
+
+        return acc;
+      }, 0);
+    },
+  }))
+
+  .actions((store) => ({
+    unselectAll() {
+      store.list.array.forEach((item) => item.setSelection(false));
     },
   }));
 

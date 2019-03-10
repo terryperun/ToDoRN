@@ -23,18 +23,14 @@ const mapStateToProps = (state) => ({
   // isLoading: state.todo.isLoading,
 });
 
-const createSelectedState = (arr, selectedId) =>
-  arr.reduce((acc, current) => {
-    acc[current.id] = current.id === selectedId;
-    return acc;
-  }, {});
-
 const enhance = compose(
   inject(({ todo }) => ({
     todoItems: todo.list.asArray,
+    selectedCount: todo.selectedCount,
     sections: todo.sections,
     getAll: todo.getAll,
     addTodo: todo.add,
+    unselectAll: todo.unselectAll,
     hasNetworkActivity: todo.hasNetworkActivity,
   })),
   observer,
@@ -46,32 +42,6 @@ const enhance = compose(
   ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
   withState('selectionMode', 'setSelectionMode', false),
-
-  withStateHandlers(
-    {
-      selected: {
-        // id: false,
-      },
-      selectedCount: 0,
-    },
-    {
-      setSelectedStatus: (state) => (id, value) => ({
-        selected: {
-          ...state.selected,
-          [id]: value,
-        },
-        selectedCount: state.selectedCount + (value ? +1 : -1),
-      }),
-      updateSelectedState: (_, props) => (id) => ({
-        selected: createSelectedState(props.todoItems, id),
-        selectedCount: 1,
-      }),
-      resetSelectionState: () => () => ({
-        selected: {},
-        selectedCount: 0,
-      }),
-    },
-  ),
 
   withProps((props) => ({
     inputRef: React.createRef(),
@@ -132,22 +102,20 @@ const enhance = compose(
         buttonText: null,
       });
     },
-    activateSelectionMode: (props) => (id) => {
+    activateSelectionMode: (props) => () => {
       props.navigation.setParams({
         headerMode: 'action',
         onCancel: () => {
-          props.resetSelectionState();
           props.navigation.setParams({ headerMode: 'regular' });
           props.setSelectionMode(false);
+          props.unselectAll();
         },
         onDeleteItems: () => {
-          props.removeTodos();
           props.setSelectionMode(false);
           props.navigation.setParams({ headerMode: 'regular' });
-          props.resetSelectionState();
         },
       });
-      props.updateSelectedState(id);
+
       props.setSelectionMode(true);
     },
   }),

@@ -24,16 +24,12 @@ const HomeScreenView = observer(
     setNewTaskInputText,
     newTaskInputText,
     addTodo,
-    todoItems,
     showBtnDone,
     hideBtnDone,
     inputRef,
     sections,
     hideAllTodos,
-    selected,
-    updateSelectedState,
     activateSelectionMode,
-    setSelectedStatus,
     selectionMode,
   }) => {
     const listSections = [
@@ -74,10 +70,7 @@ const HomeScreenView = observer(
           <TodoItem
             item={item}
             style={s.task}
-            isSelected={selected[item.id]}
-            updateSelectedState={updateSelectedState}
             onActivateSelectionMode={activateSelectionMode}
-            onSelect={setSelectedStatus}
             selectionMode={selectionMode}
           />
         )}
