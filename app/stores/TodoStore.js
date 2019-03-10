@@ -1,6 +1,8 @@
 import { types } from 'mobx-state-tree';
 import { createCollectionStore } from './utils/createCollectionStore';
 import { createFlow } from './utils/createFlow';
+import { createTask } from '../utils/creators';
+import listModel from './utils/listModel';
 
 export const Todo = types.model('Todo', {
   id: types.identifier,
@@ -15,27 +17,22 @@ export const TodoCollectionStore = createCollectionStore(
   Todo,
 );
 
-export const TodoStore = types
-  .model('TodoStore', {
+export const TodoStore = listModel(
+  'TodoStore',
+  {
     items: types.array(types.reference(Todo)),
     getAll: createFlow(getAll),
-  })
-
-  .views((store) => ({
-    get list() {
-      return store.items.slice();
-    },
-
-    get hasNetworkActivity() {
-      return store.getAll.inProgress;
-    },
-  }))
-
-  .actions((store) => ({
-    updateItems(items) {
-      store.items = items;
-    },
-  }));
+    add: createFlow(add),
+  },
+  {
+    listPropertyName: 'items',
+    entityName: 'todo',
+  },
+).views((store) => ({
+  get hasNetworkActivity() {
+    return store.getAll.inProgress || store.add.inProgress;
+  },
+}));
 
 function getAll(flow, store) {
   return function* getAllFlow() {
@@ -44,10 +41,27 @@ function getAll(flow, store) {
 
       const res = yield flow.Api.getAll();
 
-      const { ids, entities } = flow.normalize(res);
+      store._setListData(res);
 
-      flow.mergeEntities('todo', entities);
-      store.updateItems(ids);
+      flow.success();
+    } catch (err) {
+      flow.failed(err);
+    }
+  };
+}
+
+function add(flow, store) {
+  return function* addFlow(text) {
+    const todo = createTask(text);
+
+    store._addToBegin(todo);
+
+    try {
+      flow.start();
+
+      const res = yield flow.Api.add(todo);
+
+      store._replace(todo.id, res);
 
       flow.success();
     } catch (err) {

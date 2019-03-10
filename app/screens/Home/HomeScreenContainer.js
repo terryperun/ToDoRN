@@ -31,15 +31,16 @@ const createSelectedState = (arr, selectedId) =>
 
 const enhance = compose(
   inject(({ todo }) => ({
-    todoItems: todo.list,
+    todoItems: todo.rawList,
     getAll: todo.getAll,
+    addTodo: todo.add,
     hasNetworkActivity: todo.hasNetworkActivity,
   })),
   observer,
   connect(
     mapStateToProps,
     {
-      addTodo: todoOperations.addTodo,
+      // addTodo: todoOperations.addTodo,
       // getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
       updateTodo: todoOperations.updateTodo,
@@ -100,7 +101,7 @@ const enhance = compose(
       if (trimmed.length > 0) {
         LayoutAnimation.easeInEaseOut();
 
-        props.addTodo(trimmed);
+        props.addTodo.run(trimmed);
         props.setNewTaskInputText('');
       }
 

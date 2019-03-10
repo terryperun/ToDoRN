@@ -1,5 +1,4 @@
 import { types, flow, getParent, getRoot } from 'mobx-state-tree';
-import normalize from './normalize';
 
 const ErrorModel = types.model('ErrorModel', {
   message: '',
@@ -57,18 +56,6 @@ export function createFlow(flowDefinition) {
       },
 
       run: flow(flowDefinition(store, getParent(store))),
-
-      normalize(items, keyName) {
-        return normalize(items, keyName);
-      },
-
-      mergeEntities(key, object) {
-        if (typeof key === 'object') {
-          getRoot(store).entities.merge(key);
-        } else {
-          getRoot(store).entities.merge({ [key]: object });
-        }
-      },
     }));
 
   return types.optional(flowModel, {});
