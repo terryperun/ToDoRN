@@ -22,10 +22,7 @@ const enhance = compose(
           LayoutAnimation.easeInEaseOut();
         }
 
-        props.updateTodo(props.id, {
-          text: props.textItem,
-          completed: value,
-        });
+        props.item.updateText.run(props.textItem);
         props.navigation.setParams({
           showDone: false,
         });
@@ -34,7 +31,7 @@ const enhance = compose(
         props.navigation.setParams({
           showDone: false,
         });
-        props.setTextItem(props.text);
+        props.setTextItem(props.item.text);
       }
     },
   }),

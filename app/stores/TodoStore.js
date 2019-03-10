@@ -14,12 +14,17 @@ export const Todo = types
     isSelected: false,
 
     toggleCompleted: createFlow(toggleCompleted),
+    updateText: createFlow(updateText),
     remove: createFlow(remove),
   })
 
   .actions((store) => ({
     setCompleted(value) {
       store.completed = value;
+    },
+
+    setText(value) {
+      store.text = value;
     },
 
     toggleSelection() {
@@ -41,6 +46,24 @@ function toggleCompleted(flow, store) {
 
       yield flow.Api.update(store.id, {
         completed: newValue,
+      });
+
+      flow.success();
+    } catch (err) {
+      flow.failed(err);
+    }
+  };
+}
+
+function updateText(flow, store) {
+  return function* updateTextFlow(newText) {
+    store.setText(newText);
+
+    try {
+      flow.start();
+
+      yield flow.Api.update(store.id, {
+        text: newText,
       });
 
       flow.success();
@@ -88,7 +111,10 @@ export const TodoStore = types
   .views((store) => ({
     get hasNetworkActivity() {
       const itemsInProgress = store.list.asArray.some(
-        (item) => item.toggleCompleted.inProgress,
+        (item) =>
+          item.toggleCompleted.inProgress ||
+          item.updateText.inProgress ||
+          item.remove.inProgress,
       );
 
       return (
