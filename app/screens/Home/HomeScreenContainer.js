@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   compose,
   withHandlers,
@@ -7,21 +6,13 @@ import {
   hoistStatics,
   lifecycle,
   withProps,
-  withStateHandlers,
   pure,
 } from 'recompose';
 import { LayoutAnimation } from 'react-native';
 import { inject, observer } from 'mobx-react/custom';
 import HomeScreenView from './HomeScreenView';
-import { todoOperations } from '../../modules/todo';
 import { setParamOnChange } from '../../utils/enhancers';
 import { AlertService } from '../../services';
-
-const mapStateToProps = (state) => ({
-  // todoItems: state.todo.items,
-  stateItems: state,
-  // isLoading: state.todo.isLoading,
-});
 
 const enhance = compose(
   inject(({ todo }) => ({
@@ -30,22 +21,19 @@ const enhance = compose(
     sections: todo.sections,
     getAll: todo.getAll,
     addTodo: todo.add,
+    removeSelected: todo.removeSelected,
+    removeDone: todo.removeDone,
+    removeMany: todo.removeMany,
     unselectAll: todo.unselectAll,
     hasNetworkActivity: todo.hasNetworkActivity,
   })),
   observer,
-  connect(
-    mapStateToProps,
-    {
-      removeMany: todoOperations.removeMany,
-    },
-  ),
   withState('newTaskInputText', 'setNewTaskInputText', ''),
   withState('selectionMode', 'setSelectionMode', false),
 
-  withProps((props) => ({
+  withProps({
     inputRef: React.createRef(),
-  })),
+  }),
   lifecycle({
     componentDidMount() {
       this.props.getAll.run();
@@ -64,26 +52,15 @@ const enhance = compose(
       props.inputRef.current.blur();
     },
     hideAllTodos: (props) => () => {
-      const ids = props.sections.done.map((i) => i.id);
       AlertService.delete(() => {
         LayoutAnimation.easeInEaseOut();
-        props.removeMany(ids);
+        props.removeDone();
       });
     },
 
     removeTodos: (props) => () => {
-      const ids = Object.entries(props.selected).reduce(
-        (acc, [key, value]) => {
-          if (value) {
-            acc.push(key);
-          }
-          return acc;
-        },
-        [],
-      );
-
       LayoutAnimation.easeInEaseOut();
-      props.removeMany(ids);
+      props.removeSelected();
     },
   }),
 
@@ -113,6 +90,7 @@ const enhance = compose(
         onDeleteItems: () => {
           props.setSelectionMode(false);
           props.navigation.setParams({ headerMode: 'regular' });
+          props.removeSelected();
         },
       });
 

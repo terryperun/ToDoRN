@@ -82,6 +82,7 @@ export const TodoStore = types
     list: TodoList,
     getAll: createFlow(getAll),
     add: createFlow(add),
+    removeMany: createFlow(removeMany),
   })
 
   .views((store) => ({
@@ -93,6 +94,7 @@ export const TodoStore = types
       return (
         store.getAll.inProgress ||
         store.add.inProgress ||
+        store.removeMany.inProgress ||
         itemsInProgress
       );
     },
@@ -120,11 +122,31 @@ export const TodoStore = types
         return acc;
       }, 0);
     },
+
+    get selectedIds() {
+      return store.list.asArray
+        .filter((item) => item.isSelected)
+        .map((item) => item.id);
+    },
+
+    get doneIds() {
+      return store.list.asArray
+        .filter((item) => item.completed)
+        .map((item) => item.id);
+    },
   }))
 
   .actions((store) => ({
     unselectAll() {
       store.list.array.forEach((item) => item.setSelection(false));
+    },
+
+    removeSelected() {
+      return store.removeMany.run(store.selectedIds);
+    },
+
+    removeDone() {
+      return store.removeMany.run(store.doneIds);
     },
   }));
 
@@ -156,6 +178,22 @@ function add(flow, store) {
       const res = yield flow.Api.add(todo);
 
       store.list.replace(todo.id, res);
+
+      flow.success();
+    } catch (err) {
+      flow.failed(err, true);
+    }
+  };
+}
+
+function removeMany(flow, store) {
+  return function* removeSelectedFlow(ids) {
+    try {
+      store.list.removeMany(ids);
+
+      flow.start();
+
+      yield flow.Api.removeMany(ids);
 
       flow.success();
     } catch (err) {

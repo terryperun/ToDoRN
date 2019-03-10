@@ -46,6 +46,10 @@ export default function listModel(name, options) {
         store.array.splice(index, 1);
       },
 
+      removeMany(ids) {
+        ids.forEach((id) => store.remove(id));
+      },
+
       findIndex(id) {
         return store.array.findIndex((i) => i[identifierName] === id);
       },
