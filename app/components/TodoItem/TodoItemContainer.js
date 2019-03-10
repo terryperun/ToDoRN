@@ -41,9 +41,7 @@ const enhance = compose(
         props.item.toggleSelection();
       } else if (props.item.completed) {
         LayoutAnimation.easeInEaseOut();
-        props.updateTodo(props.id, {
-          completed: false,
-        });
+        props.item.toggleCompleted.run();
       } else {
         props.setIsEditing(true);
         props.navigation.setParams({
