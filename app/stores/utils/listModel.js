@@ -1,51 +1,51 @@
 import { types, getRoot } from 'mobx-state-tree';
 import normalize from './normalize';
 
-export default function listModel(name, definition, options = {}) {
-  const { listPropertyName, env, entityName } = options;
-
-  const baseStore = types.model(name, definition, env);
+export default function listModel(name, options) {
+  const { of: ofType, identifierName, entityName } = options;
 
   const listStore = types
-    .model(`${name}List`)
+    .model(name, {
+      array: types.array(ofType),
+    })
     .views((store) => ({
-      get rawList() {
-        return store[listPropertyName].slice();
+      get asArray() {
+        return store.array.slice();
       },
     }))
 
     .actions((store) => ({
-      _setListData(data) {
-        const { ids, entities } = store._normalize(data);
+      set(data) {
+        const { ids, entities } = store.normalize(data);
 
-        store._merge(entityName, entities);
-        store[listPropertyName] = ids;
+        store.merge(entityName, entities);
+        store.array = ids;
       },
 
-      _add(item) {
-        store._mergeSingle(item);
-        store[listPropertyName].push(item.id);
+      add(item) {
+        store.mergeSingle(item);
+        store.array.push(item.id);
       },
 
-      _addToBegin(item) {
-        store._mergeSingle(item);
-        store[listPropertyName].unshift(item.id);
+      addToBegin(item) {
+        store.mergeSingle(item);
+        store.array.unshift(item.id);
       },
 
-      _replace(id, newItem) {
-        const index = store[listPropertyName].findIndex(
-          (i) => i.id === id,
+      replace(id, newItem) {
+        const index = store.array.findIndex(
+          (i) => i[identifierName] === id,
         );
 
-        store._mergeSingle(newItem);
+        store.mergeSingle(newItem);
         store[index] = newItem;
       },
 
-      _normalize(items, keyName) {
+      normalize(items, keyName) {
         return normalize(items, keyName);
       },
 
-      _merge(key, object) {
+      merge(key, object) {
         if (typeof key === 'object') {
           getRoot(store).entities.merge(key);
         } else {
@@ -53,17 +53,14 @@ export default function listModel(name, definition, options = {}) {
         }
       },
 
-      _mergeSingle(entity, identifier = 'id') {
+      mergeSingle(entity) {
         getRoot(store).entities.merge({
           [entityName]: {
-            [entity[identifier]]: entity,
+            [entity[identifierName]]: entity,
           },
         });
       },
     }));
 
-  return types.compose(
-    baseStore,
-    listStore,
-  );
+  return types.optional(listStore, {});
 }

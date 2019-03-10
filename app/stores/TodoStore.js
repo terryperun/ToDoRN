@@ -1,5 +1,4 @@
-import { types } from 'mobx-state-tree';
-import { createCollectionStore } from './utils/createCollectionStore';
+import { types, getParent, destroy } from 'mobx-state-tree';
 import { createFlow } from './utils/createFlow';
 import { createTask } from '../utils/creators';
 import listModel from './utils/listModel';
@@ -34,54 +33,51 @@ function toggleCompleted(flow, store) {
 
       flow.success();
     } catch (err) {
-      flow.failed(err, true);
+      flow.failed(err);
     }
   };
 }
 
-export const TodoCollectionStore = createCollectionStore(
-  'TodoCollectionStore',
-  Todo,
-);
+const TodoList = listModel('TodoList', {
+  of: types.reference(Todo),
+  entityName: 'todo',
+  identifierName: 'id',
+});
 
-export const TodoStore = listModel(
-  'TodoStore',
-  {
-    items: types.array(types.reference(Todo)),
+export const TodoStore = types
+  .model('TodoStore', {
+    list: TodoList,
     getAll: createFlow(getAll),
     add: createFlow(add),
-  },
-  {
-    listPropertyName: 'items',
-    entityName: 'todo',
-  },
-).views((store) => ({
-  get hasNetworkActivity() {
-    const itemsInProgress = store.items.some(
-      (item) => item.toggleCompleted.inProgress,
-    );
+  })
 
-    return (
-      store.getAll.inProgress ||
-      store.add.inProgress ||
-      itemsInProgress
-    );
-  },
+  .views((store) => ({
+    get hasNetworkActivity() {
+      const itemsInProgress = store.list.asArray.some(
+        (item) => item.toggleCompleted.inProgress,
+      );
 
-  get sections() {
-    return store.rawList.reduce(
-      (acc, item) => {
-        if (!item.completed) {
-          acc.new.push(item);
-        } else {
-          acc.done.push(item);
-        }
-        return acc;
-      },
-      { done: [], new: [] },
-    );
-  },
-}));
+      return (
+        store.getAll.inProgress ||
+        store.add.inProgress ||
+        itemsInProgress
+      );
+    },
+
+    get sections() {
+      return store.list.asArray.reduce(
+        (acc, item) => {
+          if (!item.completed) {
+            acc.new.push(item);
+          } else {
+            acc.done.push(item);
+          }
+          return acc;
+        },
+        { done: [], new: [] },
+      );
+    },
+  }));
 
 function getAll(flow, store) {
   return function* getAllFlow() {
@@ -90,7 +86,7 @@ function getAll(flow, store) {
 
       const res = yield flow.Api.getAll();
 
-      store._setListData(res);
+      store.list.set(res);
 
       flow.success();
     } catch (err) {
@@ -103,14 +99,14 @@ function add(flow, store) {
   return function* addFlow(text) {
     const todo = createTask(text);
 
-    store._addToBegin(todo);
+    store.list.addToBegin(todo);
 
     try {
       flow.start();
 
       const res = yield flow.Api.add(todo);
 
-      store._replace(todo.id, res);
+      store.list.replace(todo.id, res);
 
       flow.success();
     } catch (err) {

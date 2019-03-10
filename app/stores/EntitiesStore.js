@@ -1,5 +1,11 @@
 import { types } from 'mobx-state-tree';
-import { TodoCollectionStore } from './TodoStore';
+import { createCollectionStore } from './utils/createCollectionStore';
+import { Todo } from './TodoStore';
+
+export const TodoCollectionStore = createCollectionStore(
+  'TodoCollectionStore',
+  Todo,
+);
 
 const EntitiesStore = types
   .model('EntitiesStore', {

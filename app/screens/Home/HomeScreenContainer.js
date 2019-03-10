@@ -31,7 +31,7 @@ const createSelectedState = (arr, selectedId) =>
 
 const enhance = compose(
   inject(({ todo }) => ({
-    todoItems: todo.rawList,
+    todoItems: todo.list.asArray,
     sections: todo.sections,
     getAll: todo.getAll,
     addTodo: todo.add,
