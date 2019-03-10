@@ -11,7 +11,6 @@ import { observer } from 'mobx-react/custom';
 
 const TodoItemView = observer(
   ({
-    id,
     isEditing,
     setIsEditing,
     textItem,
@@ -51,7 +50,7 @@ const TodoItemView = observer(
       autoClose: true,
       right: [
         {
-          onPress: () => removeTodo(id),
+          onPress: () => item.remove.run(),
           text: 'Delete',
           backgroundColor: colors.danger,
           color: colors.white,
@@ -92,7 +91,7 @@ const TodoItemView = observer(
       <Swipeout {...swipeSettings}>
         <Touchable
           onPress={onPress}
-          onLongPress={() => onActivateSelectionMode(id)}
+          onLongPress={() => onActivateSelectionMode(item.id)}
         >
           <View style={[s.container, isSelected && s.selected]}>
             <View style={s.checkBoxContainer}>{icon}</View>

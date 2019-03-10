@@ -73,10 +73,7 @@ const HomeScreenView = observer(
         renderItem={({ item }) => (
           <TodoItem
             item={item}
-            text={item.text}
-            completed={item.completed}
             style={s.task}
-            id={item.id}
             isSelected={selected[item.id]}
             updateSelectedState={updateSelectedState}
             onActivateSelectionMode={activateSelectionMode}

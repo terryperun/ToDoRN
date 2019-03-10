@@ -19,7 +19,7 @@ const enhance = compose(
   ]),
   withNavigation,
   withState('isEditing', 'setIsEditing', false),
-  withState('textItem', 'setTextItem', (props) => props.text),
+  withState('textItem', 'setTextItem', (props) => props.item.text),
   withHandlers({
     onSubmit: (props) => (value) => {
       if (props.textItem.trim().length > 0) {
@@ -48,8 +48,8 @@ const enhance = compose(
   withHandlers({
     onPress: (props) => () => {
       if (props.navigation.getParam('headerMode') === 'action') {
-        props.onSelect(props.id, !props.isSelected);
-      } else if (props.completed) {
+        props.onSelect(props.item.id, !props.isSelected);
+      } else if (props.item.completed) {
         LayoutAnimation.easeInEaseOut();
         props.updateTodo(props.id, {
           completed: false,

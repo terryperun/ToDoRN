@@ -41,6 +41,15 @@ export default function listModel(name, options) {
         store[index] = newItem;
       },
 
+      remove(id) {
+        const index = store.findIndex(id);
+        store.array.splice(index, 1);
+      },
+
+      findIndex(id) {
+        return store.array.findIndex((i) => i[identifierName] === id);
+      },
+
       normalize(items, keyName) {
         return normalize(items, keyName);
       },

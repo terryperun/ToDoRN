@@ -41,7 +41,6 @@ const enhance = compose(
   connect(
     mapStateToProps,
     {
-      removeTodo: todoOperations.removeTodo,
       removeMany: todoOperations.removeMany,
     },
   ),
@@ -100,11 +99,6 @@ const enhance = compose(
         LayoutAnimation.easeInEaseOut();
         props.removeMany(ids);
       });
-    },
-
-    removeTodo: (props) => (id) => {
-      LayoutAnimation.easeInEaseOut();
-      props.removeTodo(id);
     },
 
     removeTodos: (props) => () => {

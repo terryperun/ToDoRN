@@ -1,4 +1,4 @@
-import { types, getParent, destroy } from 'mobx-state-tree';
+import { types, getRoot, getParent } from 'mobx-state-tree';
 import { createFlow } from './utils/createFlow';
 import { createTask } from '../utils/creators';
 import listModel from './utils/listModel';
@@ -10,7 +10,9 @@ export const Todo = types
     completed: false,
     updatedAt: types.number,
     createdAt: types.number,
+
     toggleCompleted: createFlow(toggleCompleted),
+    remove: createFlow(remove),
   })
 
   .actions((store) => ({
@@ -34,6 +36,27 @@ function toggleCompleted(flow, store) {
       flow.success();
     } catch (err) {
       flow.failed(err);
+    }
+  };
+}
+
+function remove(flow, store) {
+  return function* removeFlow() {
+    // we should point to root store
+    // because getParent returns entities store
+    getRoot(store).todo.list.remove(store.id);
+
+    try {
+      flow.start();
+
+      yield flow.Api.remove(store.id);
+
+      flow.success();
+
+      // entities
+      getParent(store, 2).destroy(store.id);
+    } catch (err) {
+      flow.failed(err, true);
     }
   };
 }
