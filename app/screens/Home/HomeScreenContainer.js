@@ -90,7 +90,7 @@ const enhance = compose(
         onDeleteItems: () => {
           props.setSelectionMode(false);
           props.navigation.setParams({ headerMode: 'regular' });
-          props.removeSelected();
+          props.removeTodos();
         },
       });
 

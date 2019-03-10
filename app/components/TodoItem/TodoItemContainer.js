@@ -67,6 +67,10 @@ const enhance = compose(
       props.onActivateSelectionMode();
       props.item.toggleSelection();
     },
+    toggleCompleted: (props) => () => {
+      LayoutAnimation.easeInEaseOut();
+      props.item.toggleCompleted.run();
+    },
   }),
 );
 

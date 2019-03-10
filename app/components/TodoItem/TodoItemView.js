@@ -3,11 +3,11 @@ import { View, Text, TextInput } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import Swipeout from 'react-native-swipeout';
 import { MaterialIcons } from '@expo/vector-icons';
+import { observer } from 'mobx-react/custom';
 
 import { Touchable } from '../../components';
 import s from './styles';
 import { colors } from '../../styles';
-import { observer } from 'mobx-react/custom';
 
 const TodoItemView = observer(
   ({
@@ -23,6 +23,7 @@ const TodoItemView = observer(
     onActivateSelectionMode,
     selectionMode,
     dismissEditing,
+    toggleCompleted,
   }) => {
     const editingField = isEditing ? (
       <View style={s.containerInput}>
@@ -74,7 +75,7 @@ const TodoItemView = observer(
         <CheckBox
           style={s.CheckBox}
           isChecked={item.completed}
-          onClick={item.toggleCompleted.run}
+          onClick={toggleCompleted}
           checkBoxColor={colors.icon}
         />
       );
