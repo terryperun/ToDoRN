@@ -5,9 +5,7 @@ import { TodoStore } from './TodoStore';
 const RootStore = types
   .model('RootStore', {
     todo: types.optional(TodoStore, {}),
-    entities: types.optional(EntitiesStore, {
-      todo: {},
-    }),
+    entities: types.optional(EntitiesStore, {}),
   })
 
   .views((store) => ({
