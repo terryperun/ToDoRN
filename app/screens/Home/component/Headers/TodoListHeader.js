@@ -7,7 +7,7 @@ import s from './styles';
 
 const createTodoListHeader = (navigation) => {
   let headerRight;
-  if (navigation.getParam('isLoading')) {
+  if (navigation.getParam('hasNetworkActivity')) {
     headerRight = (
       <ActivityIndicator
         size="small"

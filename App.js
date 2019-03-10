@@ -1,16 +1,14 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider as MSTProvider } from 'mobx-react/custom';
 import { StatusBar, View, UIManager } from 'react-native';
-// import { AsyncStorage } from 'react-native';
-import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import { compose, lifecycle } from 'recompose';
-
+import Api from './app/api/Api';
 import RootNavigator from './app/navigation/RootNavigator';
-import { store, persistor } from './app/store';
+import createStore from './app/stores/createStore';
 import { globalStyles } from './app/styles';
 
-// AsyncStorage.clear();
+const mst = createStore({}, { Api });
+
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -18,19 +16,10 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 const App = () => (
   <View style={globalStyles.flex}>
     <StatusBar ranslucent />
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <RootNavigator />
-      </PersistGate>
-    </Provider>
+    <MSTProvider {...mst.store} root={mst.store}>
+      <RootNavigator />
+    </MSTProvider>
   </View>
 );
-
-compose()(App);
-lifecycle({
-  async componentDidMount() {
-    await persistor.persist();
-  },
-});
 
 export default App;

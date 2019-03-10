@@ -15,6 +15,9 @@
     "@expo/vector-icons": "^9.0.0",
     "babel-preset-expo": "^5.0.0",
     "expo": "^32.0.0",
+    "mobx": "^5.9.0",
+    "mobx-react": "^5.4.3",
+    "mobx-state-tree": "^3.11.0",
     "ramda": "^0.26.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
@@ -22,13 +25,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-swipeout": "^2.3.6",
     "react-navigation": "2",
-    "react-redux": "^6.0.0",
     "recompose": "^0.30.0",
-    "redux": "^4.0.1",
-    "redux-actions": "^2.6.4",
-    "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -42,8 +39,6 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-react-native": "^3.1.0",
-    "remote-redux-devtools": "^0.5.13",
-    "remotedev-server": "^0.3.1"
+    "eslint-plugin-react-native": "^3.1.0"
   }
 }

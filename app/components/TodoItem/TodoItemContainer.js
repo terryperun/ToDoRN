@@ -3,7 +3,6 @@ import {
   withState,
   hoistStatics,
   withHandlers,
-  onlyUpdateForKeys,
 } from 'recompose';
 import { withNavigation } from 'react-navigation';
 import { LayoutAnimation } from 'react-native';
@@ -11,15 +10,9 @@ import { LayoutAnimation } from 'react-native';
 import TodoItemView from './TodoItemView';
 
 const enhance = compose(
-  onlyUpdateForKeys([
-    'text',
-    'completed',
-    'isSelected',
-    'selectionMode',
-  ]),
   withNavigation,
   withState('isEditing', 'setIsEditing', false),
-  withState('textItem', 'setTextItem', (props) => props.text),
+  withState('textItem', 'setTextItem', (props) => props.item.text),
   withHandlers({
     onSubmit: (props) => (value) => {
       if (props.textItem.trim().length > 0) {
@@ -29,10 +22,7 @@ const enhance = compose(
           LayoutAnimation.easeInEaseOut();
         }
 
-        props.updateTodo(props.id, {
-          text: props.textItem,
-          completed: value,
-        });
+        props.item.updateText.run(props.textItem);
         props.navigation.setParams({
           showDone: false,
         });
@@ -41,19 +31,17 @@ const enhance = compose(
         props.navigation.setParams({
           showDone: false,
         });
-        props.setTextItem(props.text);
+        props.setTextItem(props.item.text);
       }
     },
   }),
   withHandlers({
     onPress: (props) => () => {
       if (props.navigation.getParam('headerMode') === 'action') {
-        props.onSelect(props.id, !props.isSelected);
-      } else if (props.completed) {
+        props.item.toggleSelection();
+      } else if (props.item.completed) {
         LayoutAnimation.easeInEaseOut();
-        props.updateTodo(props.id, {
-          completed: false,
-        });
+        props.item.toggleCompleted.run();
       } else {
         props.setIsEditing(true);
         props.navigation.setParams({
@@ -72,6 +60,14 @@ const enhance = compose(
       if (props.textItem.trim().length > 0) {
         props.onSubmit();
       }
+    },
+    onActivateSelectionMode: (props) => () => {
+      props.onActivateSelectionMode();
+      props.item.toggleSelection();
+    },
+    toggleCompleted: (props) => () => {
+      LayoutAnimation.easeInEaseOut();
+      props.item.toggleCompleted.run();
     },
   }),
 );

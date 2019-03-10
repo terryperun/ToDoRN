@@ -62,6 +62,8 @@
     "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 2,
     "class-methods-use-this": "off",
-    "arrow-parens": "off"
+    "arrow-parens": "off",
+    "no-param-reassign": 0,
+    "no-use-before-define": ["error", { "functions": false, "classes": true }]
   }
 }
