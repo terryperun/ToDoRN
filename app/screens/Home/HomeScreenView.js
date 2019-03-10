@@ -28,8 +28,6 @@ const HomeScreenView = observer(
     showBtnDone,
     hideBtnDone,
     inputRef,
-    removeTodo,
-    updateTodo,
     sections,
     hideAllTodos,
     selected,
@@ -74,13 +72,12 @@ const HomeScreenView = observer(
         style={s.container}
         renderItem={({ item }) => (
           <TodoItem
+            item={item}
             text={item.text}
             completed={item.completed}
             style={s.task}
             id={item.id}
             isSelected={selected[item.id]}
-            updateTodo={updateTodo}
-            removeTodo={removeTodo}
             updateSelectedState={updateSelectedState}
             onActivateSelectionMode={activateSelectionMode}
             onSelect={setSelectedStatus}

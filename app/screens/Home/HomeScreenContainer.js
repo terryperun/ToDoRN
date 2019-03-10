@@ -32,6 +32,7 @@ const createSelectedState = (arr, selectedId) =>
 const enhance = compose(
   inject(({ todo }) => ({
     todoItems: todo.rawList,
+    sections: todo.sections,
     getAll: todo.getAll,
     addTodo: todo.add,
     hasNetworkActivity: todo.hasNetworkActivity,
@@ -40,10 +41,7 @@ const enhance = compose(
   connect(
     mapStateToProps,
     {
-      // addTodo: todoOperations.addTodo,
-      // getAll: todoOperations.getAll,
       removeTodo: todoOperations.removeTodo,
-      updateTodo: todoOperations.updateTodo,
       removeMany: todoOperations.removeMany,
     },
   ),
@@ -77,17 +75,6 @@ const enhance = compose(
   ),
 
   withProps((props) => ({
-    sections: props.todoItems.reduce(
-      (acc, item) => {
-        if (!item.completed) {
-          acc.new.push(item);
-        } else {
-          acc.done.push(item);
-        }
-        return acc;
-      },
-      { done: [], new: [] },
-    ),
     inputRef: React.createRef(),
   })),
   lifecycle({

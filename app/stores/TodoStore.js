@@ -4,13 +4,40 @@ import { createFlow } from './utils/createFlow';
 import { createTask } from '../utils/creators';
 import listModel from './utils/listModel';
 
-export const Todo = types.model('Todo', {
-  id: types.identifier,
-  text: '',
-  completed: false,
-  updatedAt: types.number,
-  createdAt: types.number,
-});
+export const Todo = types
+  .model('Todo', {
+    id: types.identifier,
+    text: '',
+    completed: false,
+    updatedAt: types.number,
+    createdAt: types.number,
+    toggleCompleted: createFlow(toggleCompleted),
+  })
+
+  .actions((store) => ({
+    setCompleted(value) {
+      store.completed = value;
+    },
+  }));
+
+function toggleCompleted(flow, store) {
+  return function* toggleCompletedFlow() {
+    const newValue = !store.completed;
+    store.setCompleted(newValue);
+
+    try {
+      flow.start();
+
+      yield flow.Api.update(store.id, {
+        completed: newValue,
+      });
+
+      flow.success();
+    } catch (err) {
+      flow.failed(err, true);
+    }
+  };
+}
 
 export const TodoCollectionStore = createCollectionStore(
   'TodoCollectionStore',
@@ -30,7 +57,29 @@ export const TodoStore = listModel(
   },
 ).views((store) => ({
   get hasNetworkActivity() {
-    return store.getAll.inProgress || store.add.inProgress;
+    const itemsInProgress = store.items.some(
+      (item) => item.toggleCompleted.inProgress,
+    );
+
+    return (
+      store.getAll.inProgress ||
+      store.add.inProgress ||
+      itemsInProgress
+    );
+  },
+
+  get sections() {
+    return store.rawList.reduce(
+      (acc, item) => {
+        if (!item.completed) {
+          acc.new.push(item);
+        } else {
+          acc.done.push(item);
+        }
+        return acc;
+      },
+      { done: [], new: [] },
+    );
   },
 }));
 
